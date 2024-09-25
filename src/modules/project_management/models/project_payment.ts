@@ -42,6 +42,7 @@ class DataModel extends Model<Infer, InferCreation> {
     declare installment_no?: number;
     declare receipt_no?: string;
     declare type?: payemnt_types;
+    declare is_approved?: 0|1|2; // 2 = canceled
 
     declare status?: status;
     declare creator?: number;
@@ -99,6 +100,11 @@ function init(sequelize: Sequelize) {
             type: {
                 type: DataTypes.ENUM('booking_money','down_payment','installment'),
                 allowNull: true,
+            },
+
+            is_approved: {
+                type: DataTypes.TINYINT().UNSIGNED,
+                defaultValue: 0,
             },
           
             status: {

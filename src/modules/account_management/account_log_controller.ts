@@ -20,6 +20,10 @@ import all_expense from './services/all_expense';
 import store_expense from './services/store_expense';
 import store_gateway_payment from './services/store_gateway_payment';
 import debit_credit from './services/debit_credit';
+import todays_collection from './services/todays_collection';
+import seven_days_collection from './services/seven_days_collection';
+import update_and_approve from './services/update_and_approve';
+import approve_payment from './services/approve_payment';
 
 export default function (fastify: FastifyInstance) {
     return {
@@ -34,14 +38,14 @@ export default function (fastify: FastifyInstance) {
             let data: responseObject = await all_incomes(fastify, req);
             res
             .code(data.status)
-            .header('Cache-Control', 'public, max-age=30') 
+            // .header('Cache-Control', 'public, max-age=30') 
             .send(data);
         },
         all_expense: async function (req: FastifyRequest, res: FastifyReply) {
             let data: responseObject = await all_expense(fastify, req);
             res
             .code(data.status)
-            .header('Cache-Control', 'public, max-age=30') 
+            // .header('Cache-Control', 'public, max-age=30') 
             .send(data);
         },
 
@@ -70,6 +74,16 @@ export default function (fastify: FastifyInstance) {
             res.code(data.status).send(data);
         },
 
+        todays_collection: async function (req: FastifyRequest, res: FastifyReply) {
+            let data: responseObject = await todays_collection(fastify, req);
+            res.code(data.status).send(data);
+        },
+
+        seven_days_collection: async function (req: FastifyRequest, res: FastifyReply) {
+            let data: responseObject = await seven_days_collection(fastify, req);
+            res.code(data.status).send(data);
+        },
+
         store_gateway_payment: async function (req: FastifyRequest, res: FastifyReply) {
             let data: responseObject = await store_gateway_payment(fastify, req);
             res.code(data.status).send(data);
@@ -82,6 +96,16 @@ export default function (fastify: FastifyInstance) {
 
         update: async function (req: FastifyRequest, res: FastifyReply) {
             let data: responseObject = await update(fastify, req);
+            res.code(data.status).send(data);
+        },
+
+        update_and_approve: async function (req: FastifyRequest, res: FastifyReply) {
+            let data: responseObject = await update_and_approve(fastify, req);
+            res.code(data.status).send(data);
+        },
+       
+        approve_payment: async function (req: FastifyRequest, res: FastifyReply) {
+            let data: responseObject = await approve_payment(fastify, req);
             res.code(data.status).send(data);
         },
 

@@ -39,9 +39,11 @@ class DataModel extends Model<Infer, InferCreation> {
     declare reference_id?: number;
 
     declare date?: string;
+    declare type?: 'booking_money' | 'down_payment' | 'installment' | 'reference_commision';
     declare amount?: number;
-    declare type?: 'booking_money'| 'down_payment'| 'installment'| 'reference_commision';
-
+    declare on_amount?: number;
+    declare is_approved?: 0 | 1 | 2; // pending,approved,canceled
+    
     declare status?: status;
     declare creator?: number;
 
@@ -93,6 +95,14 @@ function init(sequelize: Sequelize) {
             amount: {
                 type: new DataTypes.FLOAT().UNSIGNED,
                 allowNull: true,
+            },
+            on_amount: {
+                type: new DataTypes.FLOAT().UNSIGNED,
+                allowNull: true,
+            },
+            is_approved: {
+                type: new DataTypes.TINYINT().UNSIGNED,
+                defaultValue: 0,
             },
             type: {
                 type: new DataTypes.ENUM('booking_money', 'down_payment', 'installment', 'reference_commision'),

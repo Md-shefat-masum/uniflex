@@ -43,6 +43,7 @@ class DataModel extends Model<Infer, InferCreation> {
     declare amount_in_text?: string;
     declare description?: string;
     declare type?: string;
+    declare is_approved?: 0|1|2; // 2 = canceled
 
     declare status?: status;
     declare creator?: number;
@@ -104,6 +105,11 @@ function init(sequelize: Sequelize) {
             type: {
                 type: new DataTypes.STRING(20),
                 defaultValue: 'income',
+            },
+            is_approved: {
+                type: new DataTypes.TINYINT().UNSIGNED,
+                defaultValue: 0,
+                comment: '0,1,2 | pending,ok,cancel'
             },
 
             creator: {

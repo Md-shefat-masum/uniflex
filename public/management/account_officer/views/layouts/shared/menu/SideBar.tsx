@@ -14,60 +14,19 @@ const SideBar: React.FC<Props> = (props: Props) => {
     return (
         <>
             <ul className="sidebar-menu">
-                {/* Dashboard  */}
+
                 <MenuSingle to="/" icon="icon-dashboard" label="Dashboard" />
-                {/* HRM  */}
-                <MenuDropDown
-                    section_title="Management"
-                    group_title="HRM"
-                    icon="icon-desktop"
-                >
-                    <MenuDropDownItem label="All Marketting " to="/users?role=marketing" />
-                    <MenuDropDownItem label="All Staffs" to="/users?role=staff" />
-                    <MenuDropDownItem label="All Management" to="/users?role=management" />
-                    <MenuDropDownItem label="All Customer" to="/users?role=customer" />
-                    <MenuDropDownItem
-                        label="Create User"
-                        to="/users/create"
-                    />
-                    <MenuDropDownItem
-                        label="Employee History"
-                        to="/users/history"
-                    />
-                </MenuDropDown>
-                {/* Booking  */}
-                <MenuDropDown group_title="Projects" icon="icon-desktop">
-                    <MenuDropDownItem label="All Projects" to="/project" />
-                    <MenuDropDownItem label="Create Project" to="/project/create" />
-                    <MenuDropDownItem label="All Bookings" to="/booking" />
-                    <MenuDropDownItem label="Create Booking" to="/booking/create" />
-                    <MenuDropDownItem label="Project Payment" to="/project_payment" />
-                </MenuDropDown>
-                {/* Account  */}
-                <MenuDropDown group_title="Account" icon="icon-desktop">
-                    <MenuDropDownItem label="Incomes" to="/accounts/incomes" />
-                    <MenuDropDownItem label="Expenses" to="/accounts/expense" />
-                    <MenuDropDownItem label="Expense Entry" to="/accounts/new-expense" />
-                    <MenuDropDownItem label="All Account" to="/account_types" />
-                    <MenuDropDownItem label="All Account Number" to="/account_numbers" />
-                    <MenuDropDownItem label="All Account Categories" to="/account_categories" />
-                    <MenuDropDownItem label="Debit Credit" to="/debit_credit" />
-                </MenuDropDown>
-                {/* Reports  */}
-                <MenuDropDown group_title="Reports" icon="icon-desktop">
-                    <MenuDropDownItem label="Income Statement" to="/income_statement" />
-                    <MenuDropDownItem label="Expense Statement" to="/expense_statement" />
-                    <MenuDropDownItem label="Closing Balance" to="/closing_balance" />
-                    <MenuDropDownItem label="Project Report" to="/project_report" />
-                    <MenuDropDownItem label="Customer Report" to="/customer_report" />
-                    <MenuDropDownItem label="Due Report" to="/due_report" />
-                    <MenuDropDownItem label="Incentive Report" to="/incentive_report" />
-                </MenuDropDown>
-                {/* Project Visits  */}
-                <MenuDropDown group_title="Project Visits" icon="icon-desktop">
-                    <MenuDropDownItem label="Visit History" to="/assign_visit" />
-                    <MenuDropDownItem label="Assign Visit" to="/visit_history" />
-                </MenuDropDown>
+
+                <MenuSingle icon="icofont icofont-chart-line" label="Incomes" to="/accounts/incomes" />
+                <MenuSingle icon="icofont icofont-chart-bar-graph" label="Expenses" to="/accounts/expense" />
+
+                <MenuSingle icon="icofont icofont-chart-flow" label="All Account" to="/account_types" />
+                <MenuSingle icon="icofont icofont-file-spreadsheet" label="All Account Number" to="/account_numbers" />
+                <MenuSingle icon="icofont icofont-calculations" label="All Account Categories" to="/account_categories" />
+                <MenuSingle icon="icofont icofont-architecture-alt" label="Debit Credit" to="/debit_credit" />
+
+                {/* <MenuSingle icon="icon-plus" label="Expense Entry" to="/accounts/new-expense" />
+                <MenuSingle icon="icon-plus" label="Project Payment" to="/project_payment" /> */}
 
                 <li>
                     <a className="sidebar-header" href="/logout" onClick={(e) => {
@@ -87,12 +46,12 @@ const SideBar: React.FC<Props> = (props: Props) => {
 
 function active_link(hash) {
     let url = new URL(hash);
-    (window as any).$(`.sidebar-submenu a`).removeClass('active');
+    (window as any).jQuery(`.sidebar-submenu a`).removeClass('active');
     (window as any)
-        .$(`.sidebar-submenu a[href="${url.hash}"]`)
+        .jQuery(`.sidebar-submenu a[href="${url.hash}"]`)
         .addClass('active');
     (window as any)
-        .$(`.sidebar-submenu a[href="${url.hash}"]`)
+        .jQuery(`.sidebar-submenu a[href="${url.hash}"]`)
         .parent('li')
         .parent('ul').css({ display: 'block' }).addClass('menu-open')
         .parent('li').addClass('active')
@@ -102,8 +61,8 @@ function active_link(hash) {
 function init_nav_action() {
     var animationSpeed = 300,
         subMenuSelector = '.sidebar-submenu';
-    (window as any).$('.sidebar-menu').on('click', 'li a', function (e) {
-        var $this = (window as any).$(this);
+    (window as any).jQuery('.sidebar-menu').on('click', 'li a', function (e) {
+        var $this = (window as any).jQuery(this);
         var checkElement = $this.next();
         if (checkElement.is(subMenuSelector) && checkElement.is(':visible')) {
             checkElement.slideUp(animationSpeed, function () {

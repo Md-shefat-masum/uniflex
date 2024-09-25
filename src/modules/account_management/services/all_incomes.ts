@@ -69,7 +69,7 @@ async function all_incomes(
     // } else {
     // }
     select_fields = [
-        'id', 'type',
+        'id', 'type', 'is_approved', 'trx_id',
         'account_id', 'account_number_id', 'account_category_id', 
         'date', 'uid', 'date', 'amount', 'status'
     ];

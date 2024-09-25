@@ -101,9 +101,10 @@ const NewExpense: React.FC<Props> = (props: Props) => {
                                     <div className="form-group form-vertical">
                                         <Input name={"amount_in_text"} />
                                     </div>
-                                    <div className="form-group grid-full-width form-vertical">
-                                        <Input name={"expense_description"} />
-                                    </div>
+                                </div>
+                                <div className="form-group grid-full-width form-vertical">
+                                    <label>Expense Description</label>
+                                    <textarea name="expense_description" rows={5} className="form-control"></textarea>
                                 </div>
                             </div>
 

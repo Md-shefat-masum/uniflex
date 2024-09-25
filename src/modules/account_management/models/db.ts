@@ -72,6 +72,7 @@ const db = async function (): Promise<models> {
     });
 
     /** account log relations */
+
     AccountLogModel.belongsTo(AccountModel,{
         foreignKey: 'account_id',
         targetKey: 'id',

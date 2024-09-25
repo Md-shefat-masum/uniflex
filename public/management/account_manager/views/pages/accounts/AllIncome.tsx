@@ -18,7 +18,7 @@ import SelectAll from './components/all_data_page/SelectIAll';
 import TableHeading from './components/all_data_page/TableHeading';
 import { all_incomes } from './config/store/async_actions/all_incomes';
 
-export interface Props {}
+export interface Props { }
 
 const All: React.FC<Props> = (props: Props) => {
     const state: typeof initialState = useSelector(
@@ -30,7 +30,7 @@ const All: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         dispatch(
             storeSlice.actions.set_select_fields(
-                'account_id, account_number_id, user_id, account_category_id, uid, date, type, amount, creator, status, created_at, updated_at',
+                'account_id, is_approved, account_number_id, user_id, account_category_id, uid, date, type, amount, creator, status, created_at, updated_at',
             ),
         );
         dispatch(all_incomes({}));
@@ -62,6 +62,16 @@ const All: React.FC<Props> = (props: Props) => {
                                             sort={false}
                                         />
                                         <TableHeading
+                                            label={`Status`}
+                                            col_name={`is_approved`}
+                                            sort={false}
+                                        />
+                                        <TableHeading
+                                            label={`Amount`}
+                                            col_name={`amount`}
+                                            sort={true}
+                                        />
+                                        <TableHeading
                                             label={`Customer ID`}
                                             col_name={`uid`}
                                             sort={false}
@@ -72,11 +82,7 @@ const All: React.FC<Props> = (props: Props) => {
                                             col_name={`name`}
                                             sort={false}
                                         />
-                                        <TableHeading
-                                            label={`Amount`}
-                                            col_name={`amount`}
-                                            sort={true}
-                                        />
+                                        
                                         <TableHeading
                                             label={`Account`}
                                             col_name={`account_id`}
@@ -112,6 +118,16 @@ const All: React.FC<Props> = (props: Props) => {
                                                     </td>
                                                     {/* ID  */}
                                                     <td>{i.id}</td>
+                                                    <td>
+                                                        {
+                                                            i.is_approved ?
+                                                                <span className="border-success text-success border p-1">Approved</span>
+                                                                : <span className="border-warning text-danger border p-1">Pending</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {i.amount} /-
+                                                    </td>
                                                     {/* Customer ID  */}
                                                     <td>{i.user?.uid}</td>
                                                     {/* Image  */}
@@ -131,17 +147,15 @@ const All: React.FC<Props> = (props: Props) => {
                                                     {/* Name  */}
                                                     <td>
                                                         <span
-                                                            // className="quick_view_trigger"
-                                                            // onClick={() =>
-                                                            //     quick_view(i)
-                                                            // }
+                                                        // className="quick_view_trigger"
+                                                        // onClick={() =>
+                                                        //     quick_view(i)
+                                                        // }
                                                         >
-                                                           {i.user?.name}
+                                                            {i.user?.name}
                                                         </span>
                                                     </td>
-                                                    <td>
-                                                        {i.amount}
-                                                    </td>
+                                                    
                                                     <td>
                                                         {i.account?.title}
                                                     </td>
@@ -151,7 +165,7 @@ const All: React.FC<Props> = (props: Props) => {
                                                     <td>
                                                         {i.project_payment?.project.title}
                                                     </td>
-                                                    
+
                                                 </tr>
                                             );
                                         },

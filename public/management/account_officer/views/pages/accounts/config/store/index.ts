@@ -11,6 +11,8 @@ import { restore } from './async_actions/restore';
 import { destroy } from './async_actions/destroy';
 import { import_data } from './async_actions/import_data';
 import { store_reducers } from './reducers';
+import { update_and_approve } from './async_actions/update_and_approve';
+import { approve_payment } from './async_actions/approve_payment';
 
 const storeSlice = createSlice({
     name: setup.store_prefix,
@@ -28,6 +30,12 @@ const storeSlice = createSlice({
                 // console.log(type, payload, meta);
             })
             .addCase(update.fulfilled, (state, { type, payload, meta }) => {
+                // console.log(type, payload, meta);
+            })
+            .addCase(update_and_approve.fulfilled, (state, { type, payload, meta }) => {
+                // console.log(type, payload, meta);
+            })
+            .addCase(approve_payment.fulfilled, (state, { type, payload, meta }) => {
                 // console.log(type, payload, meta);
             })
             .addCase(restore.fulfilled, (state, { type, payload, meta }) => {

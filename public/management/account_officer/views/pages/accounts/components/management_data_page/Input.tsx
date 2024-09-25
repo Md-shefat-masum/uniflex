@@ -6,6 +6,7 @@ export interface Props {
     type?: string;
     value?: string;
     callback?: (e) => void;
+    onChange?: (e) => void;
 }
 
 const Input: React.FC<Props> = ({

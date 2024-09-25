@@ -17,8 +17,10 @@ import SelectItem from './components/all_data_page/SelectItem';
 import SelectAll from './components/all_data_page/SelectIAll';
 import TableHeading from './components/all_data_page/TableHeading';
 import { all_incomes } from './config/store/async_actions/all_incomes';
+import { Link } from 'react-router-dom';
+import { approve_payment } from './config/store/async_actions/approve_payment';
 
-export interface Props {}
+export interface Props { }
 
 const All: React.FC<Props> = (props: Props) => {
     const state: typeof initialState = useSelector(
@@ -30,7 +32,7 @@ const All: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         dispatch(
             storeSlice.actions.set_select_fields(
-                'account_id, account_number_id, user_id, account_category_id, uid, date, type, amount, creator, status, created_at, updated_at',
+                'account_id, is_approved, account_number_id, user_id, trx_id, account_category_id, uid, date, type, amount, creator, status, created_at, updated_at',
             ),
         );
         dispatch(all_incomes({}));
@@ -39,6 +41,14 @@ const All: React.FC<Props> = (props: Props) => {
     function quick_view(data: anyObject = {}) {
         dispatch(storeSlice.actions.set_item(data));
         dispatch(storeSlice.actions.set_show_quick_view_canvas(true));
+    }
+
+    async function approve_payment_handler(i) {
+        let conf = await (window as any).s_confirm('approve payment ' + i.amount);
+        if (!conf) return;
+        await dispatch(approve_payment({ id: i.id }) as any);
+        await dispatch(storeSlice.actions.set_only_latest_data(true));
+        await dispatch(all_incomes({}));
     }
 
     return (
@@ -62,6 +72,36 @@ const All: React.FC<Props> = (props: Props) => {
                                             sort={false}
                                         />
                                         <TableHeading
+                                            label={`Status`}
+                                            col_name={`is_approved`}
+                                            sort={false}
+                                        />
+                                        <TableHeading
+                                            label={`action`}
+                                            col_name={`action`}
+                                            sort={false}
+                                        />
+                                        <TableHeading
+                                            label={`Amount`}
+                                            col_name={`amount`}
+                                            sort={true}
+                                        />
+                                        <TableHeading
+                                            label={`Amount in Text`}
+                                            col_name={`amount_in_text`}
+                                            sort={false}
+                                        />
+                                        <TableHeading
+                                            label={`TRX ID`}
+                                            col_name={`trx_id`}
+                                            sort={false}
+                                        />
+                                        <TableHeading
+                                            label={`Type`}
+                                            col_name={`type`}
+                                            sort={false}
+                                        />
+                                        <TableHeading
                                             label={`Customer ID`}
                                             col_name={`uid`}
                                             sort={false}
@@ -72,11 +112,7 @@ const All: React.FC<Props> = (props: Props) => {
                                             col_name={`name`}
                                             sort={false}
                                         />
-                                        <TableHeading
-                                            label={`Amount`}
-                                            col_name={`amount`}
-                                            sort={true}
-                                        />
+
                                         <TableHeading
                                             label={`Account`}
                                             col_name={`account_id`}
@@ -105,14 +141,47 @@ const All: React.FC<Props> = (props: Props) => {
                                                     <td>
                                                         <TableRowAction
                                                             item={i}
-                                                        />
+                                                        >
+                                                            <li>
+                                                                <Link to={`/${setup.route_prefix}/edit-entry/${i.id}`}>
+                                                                    Edit And Approve
+                                                                </Link>
+                                                            </li>
+                                                        </TableRowAction>
                                                     </td>
                                                     <td>
                                                         <SelectItem item={i} />
                                                     </td>
                                                     {/* ID  */}
                                                     <td>{i.id}</td>
-                                                    {/* Customer ID  */}
+                                                    <td>
+                                                        {
+                                                            i.is_approved == 0 ? <span className="border-warning text-warning border p-1">Pending</span> : ''
+                                                        }
+                                                        {
+                                                            i.is_approved == 1 ? <span className="border-info text-info border p-1">Approved</span> : ''
+                                                        }
+                                                        {
+                                                            i.is_approved == 2 ? <span className="border-danger text-danger border p-1">Canceled</span> : ''
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {
+                                                            i.is_approved == 0 ?
+                                                                <button onClick={() => approve_payment_handler(i)} className="btn btn-sm btn-outline-info">
+                                                                    Approve
+                                                                </button>
+                                                                : ""
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {i.amount} /-
+                                                    </td>
+                                                    <td>
+                                                        {(window as any).convertAmount(i.amount).bn} টাকা মাত্র
+                                                    </td>
+                                                    <td>{i.trx_id}</td>
+                                                    <td>{i.project_payment?.type}</td>
                                                     <td>{i.user?.uid}</td>
                                                     {/* Image  */}
                                                     <td>
@@ -131,17 +200,15 @@ const All: React.FC<Props> = (props: Props) => {
                                                     {/* Name  */}
                                                     <td>
                                                         <span
-                                                            // className="quick_view_trigger"
-                                                            // onClick={() =>
-                                                            //     quick_view(i)
-                                                            // }
+                                                        // className="quick_view_trigger"
+                                                        // onClick={() =>
+                                                        //     quick_view(i)
+                                                        // }
                                                         >
-                                                           {i.user?.name}
+                                                            {i.user?.name}
                                                         </span>
                                                     </td>
-                                                    <td>
-                                                        {i.amount}
-                                                    </td>
+
                                                     <td>
                                                         {i.account?.title}
                                                     </td>
@@ -151,7 +218,7 @@ const All: React.FC<Props> = (props: Props) => {
                                                     <td>
                                                         {i.project_payment?.project.title}
                                                     </td>
-                                                    
+
                                                 </tr>
                                             );
                                         },

@@ -9,7 +9,7 @@ import Select from './components/management_data_page/Select';
 import { anyObject } from '../../../common_types/object';
 import AccountNumberDropdown from './menus/accounts/account_numbers/components/dropdown/DropDown';
 import AccountCategoryDropdown from './menus/accounts/account_categories/components/dropdown/DropDown';
-// import UserDropdown from '../users/components/dropdown/DropDown';
+import UserDropdown from '../users/components/dropdown/DropDown';
 import moment from 'moment/moment';
 export interface Props { }
 
@@ -68,14 +68,14 @@ const NewExpense: React.FC<Props> = (props: Props) => {
                                     </div>
                                     <div className="form-group form-vertical">
                                         <label>Select User</label>
-                                        {/* <UserDropdown
+                                        <UserDropdown
                                             name="user_id"
                                             multiple={false}
                                             get_selected_data={(data) => {
                                                 console.log(data);
 
                                             }}
-                                        /> */}
+                                        />
                                     </div>
                                     <div className="form-group form-vertical">
                                         <label htmlFor="date">Date</label>

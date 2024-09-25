@@ -37,12 +37,22 @@ async function account_insentive_entry(
         date?: string,
         amount: number,
         type?: 'booking_money'| 'down_payment'| 'installment'| 'reference_commision',
+        is_approved?: number,
     }
 ): Promise<object> {
 
     /** initializations */
     let models = await db();
     let data = new models.AccountUserSalesInsentiveCalculationModel();
+    
+    /** destroy previous insetives related to the payment_id */
+    await models.AccountUserSalesInsentiveCalculationModel.destroy({
+        where: {
+            project_payment_id: param.project_payment_id,
+        }
+    });
+
+    if(param.is_approved != 1) return {};
 
     /** store data into database */
     try {
@@ -87,6 +97,7 @@ async function account_insentive_entry(
             date:any,
             amount:any,
             type:any,
+            on_amount = param.amount,
         ){
             await models.AccountUserSalesInsentiveCalculationModel.create({
                 project_payment_id: project_payment_id,
@@ -98,8 +109,10 @@ async function account_insentive_entry(
                 reference_id: reference_id,
         
                 date: date,
-                amount: amount,
                 type: type,
+                amount: amount,
+                on_amount: on_amount,
+                is_approved: 1,
             });
 
             let user_id = mo_id || agm_id || gm_id || ed_id;

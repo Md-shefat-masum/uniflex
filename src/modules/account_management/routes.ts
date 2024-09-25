@@ -20,6 +20,7 @@ module.exports = async function (fastify: FastifyInstance) {
         .post(`${prefix}/block`, AccountCategoryControllerInstance.block)
         .post(`${prefix}/import`, AccountCategoryControllerInstance.import);
     
+    /** -------- */
     const AccountControllerInstance = account_controller(fastify);
     prefix = '/account';
     fastify
@@ -33,6 +34,7 @@ module.exports = async function (fastify: FastifyInstance) {
         .post(`${prefix}/block`, AccountControllerInstance.block)
         .post(`${prefix}/import`, AccountControllerInstance.import);
 
+    /** -------- */
     const AccountLogControllerInstance = account_log_controller(fastify);
     prefix = '/account/logs';
     fastify
@@ -43,6 +45,8 @@ module.exports = async function (fastify: FastifyInstance) {
         
         .post(`${prefix}/store-expense`,AccountLogControllerInstance.store_expense)
         .get(`${prefix}/debit-credit`,AccountLogControllerInstance.debit_credit)
+        .get(`${prefix}/todays-collection`,AccountLogControllerInstance.todays_collection)
+        .get(`${prefix}/seven-days-collection`,AccountLogControllerInstance.seven_days_collection)
         
         /** store log after a successful payment */
         .post(`${prefix}/store-gateway-payment-on-success`,{
@@ -50,13 +54,18 @@ module.exports = async function (fastify: FastifyInstance) {
         }, AccountLogControllerInstance.store_gateway_payment)
         
         .post(`${prefix}/update`, AccountLogControllerInstance.update)
+        .post(`${prefix}/update-and-approve`, AccountLogControllerInstance.update_and_approve)
         .post(`${prefix}/soft-delete`, AccountLogControllerInstance.soft_delete)
         .post(`${prefix}/restore`, AccountLogControllerInstance.restore)
         .post(`${prefix}/destroy`, AccountLogControllerInstance.destroy)
         .post(`${prefix}/block`, AccountLogControllerInstance.block)
         .post(`${prefix}/import`, AccountLogControllerInstance.import)
-        .get(`${prefix}/:id`, AccountLogControllerInstance.find);
 
+        .get(`${prefix}/:id/approve-payment`, AccountLogControllerInstance.approve_payment)
+        .get(`${prefix}/entry-details/:id`, AccountLogControllerInstance.find)
+        .get(`${prefix}/:id`, AccountLogControllerInstance.find);
+    
+    /** -------- */
     const AccountNumberControllerInstance = account_number_controller(fastify);
     prefix = '/account/numbers';
     fastify

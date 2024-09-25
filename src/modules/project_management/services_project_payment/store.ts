@@ -21,7 +21,7 @@ async function validate(req: Request) {
     let fields = [
         'installment_no',
         'type',
-        'receipt_no',
+        // 'receipt_no',
         'date',
         'amount',
         'amount_in_text',
@@ -39,27 +39,26 @@ async function validate(req: Request) {
             .run(req);
     }
 
-    field = [
-        // 'user_id',
-    ];
-    for (let index = 0; index < field.length; index++) {
-        const element = field[index];
-        await body(element)
+    
+    var element = 'receipt_no';
+    await body(element)
             .not()
             .isEmpty()
             .custom(async (value) => {
-                const length = value.length;
-                if (length <= 2) {
+                let models = await db();
+                let data = await models.ProjectPaymentModel.findOne({
+                    where: {
+                        'receipt_no': value,
+                    }
+                });
+                if(data){
+
                     throw new Error(
-                        `the <b>${element.replaceAll('_', ' ')}</b> field is required`,
+                        `the <b>${value}</b> is taken.`,
                     );
                 }
             })
-            .withMessage(
-                `the <b>${element.replaceAll('_', ' ')}</b> field is required`,
-            )
             .run(req);
-    }
 
     let result = await validationResult(req);
 
@@ -118,9 +117,11 @@ async function store(
             account_id: acccount_id,
             account_number_id: acccount_id,
             amount: body.amount,
+            amount_in_text: body.amount_in_text,
             type: 'income',
             user_id: body.user_id,
             date: body.date,
+            trx_id: body.receipt_no,
         });
 
         /*** track project payment */
@@ -139,17 +140,22 @@ async function store(
         await project_payment.save();
 
         /** insentive calculation */
-        let user_insentive_calculations = await account_insentive_entry(fastify_instance, req, {
-            project_payment_id: project_payment.id  || 1,
-            customer_id: body.user_id,
-            mo_id: body.mo_id,
-            agm_id: body.agm_id,
-            gm_id: body.gm_id,
-            ed_id: body.ed_id,
-            date: body.date,
-            amount: body.amount,
-            type: body.type,
-        })
+        /** 
+            . insentive will calculate after accounter officer approval, 
+            . code applied at update_and_approve service 
+         * */
+
+        // let user_insentive_calculations = await account_insentive_entry(fastify_instance, req, {
+        //     project_payment_id: project_payment.id  || 1,
+        //     customer_id: body.user_id,
+        //     mo_id: body.mo_id,
+        //     agm_id: body.agm_id,
+        //     gm_id: body.gm_id,
+        //     ed_id: body.ed_id,
+        //     date: body.date,
+        //     amount: body.amount,
+        //     type: body.type,
+        // })
 
         return response(201, 'data created', project_payment);
     } catch (error: any) {

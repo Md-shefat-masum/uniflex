@@ -24,6 +24,28 @@ async function details(
             where: {
                 id: params.id,
             },
+            include: [
+                {
+                    model: models.ProjectPaymentModel,
+                    as: 'project_payment'
+                },
+                {
+                    model: models.UserModel,
+                    as: 'user',
+                },
+                {
+                    model: models.AccountModel,
+                    as: 'account',
+                },
+                {
+                    model: models.AccountNumberModel,
+                    as: 'account_number',
+                },
+                {
+                    model: models.AccountCategoryModel,
+                    as: 'category',
+                },
+            ]
         });
 
         if (data) {

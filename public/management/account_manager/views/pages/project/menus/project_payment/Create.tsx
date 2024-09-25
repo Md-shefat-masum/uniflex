@@ -10,6 +10,7 @@ import UserDropdown from '../../../users/components/dropdown/DropDown';
 import Select from '../project_payment/components/management_data_page/Select';
 import numberToWords from 'number-to-words'
 import axios from 'axios';
+import moment from 'moment/moment';
 
 export interface Props { }
 
@@ -183,7 +184,7 @@ const Create: React.FC<Props> = (props: Props) => {
                                             <b className="form-control">
                                                 {new Date().toDateString()}
                                             </b>
-                                            <input type="hidden" placeholder="date" name="date" id="date" value={new Date().toISOString().substr(0, 10)} />
+                                            <input type="hidden" placeholder="date" name="date" id="date" value={moment().format('YYYY-MM-DD')} />
                                         </div>
                                     </div>
                                     {/* <div className="form-group form-vertical" >

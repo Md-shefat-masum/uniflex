@@ -52,12 +52,13 @@ async function project_payment_entry(
         account_category_id: param.account_category_id,
         type: param.type,
         trx_id: param.trx_id,
-        date: moment(param.date).format('YYYY-MM-DD HH:mm:ss'),
+        // date: moment(param.date).format('YYYY-MM-DD HH:mm:ss'),
+        date: param.date,
         amount: param.amount,
         amount_in_text: param.amount_in_text,
         description: param.description,
     };
-
+    
     /** store data into database */
     try {
         (await data.update(inputs)).save();

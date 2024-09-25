@@ -8,6 +8,8 @@ import Details from '../Details';
 import Edit from '../Edit';
 import History from '../History';
 import NewExpense from '../NewExpense';
+import EntryEdit from '../EntryEdit';
+import ExpenseEdit from '../ExpenseEdit';
 
 
 // export { default as DashboardCounterAll} from "./All.jsx";
@@ -35,6 +37,14 @@ export default {
         {
             path: 'new-expense',
             element: <NewExpense />,
+        },
+        {
+            path: 'edit-entry/:id',
+            element: <EntryEdit />,
+        },
+        {
+            path: 'edit-expense/:id',
+            element: <ExpenseEdit />,
         },
         {
             path: 'edit/:id',

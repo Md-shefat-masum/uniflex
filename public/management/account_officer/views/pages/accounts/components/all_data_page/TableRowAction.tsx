@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import { anyObject } from '../../../../../common_types/object';
 import setup from '../../config/setup';
 import { Link } from 'react-router-dom';
@@ -8,8 +8,9 @@ import DestroyButton from './DestroyButton';
 import RestoreButton from './RestoreButton';
 export interface Props {
     item: anyObject;
+    children?: ReactNode;
 }
-const TableRowAction: React.FC<Props> = ({ item }: Props) => {
+const TableRowAction: React.FC<Props> = ({ item, children }: Props) => {
     const toggle_icon = useRef<HTMLElement | null>(null);
 
     return (
@@ -21,11 +22,11 @@ const TableRowAction: React.FC<Props> = ({ item }: Props) => {
             />
             <div className="table_action_btns">
                 <ul>
-                    <li>
+                    {/* <li>
                         <Link to={`/${setup.route_prefix}/details/${item.id}`}>
                             Show
                         </Link>
-                    </li>
+                    </li> */}
                     {/* <li>
                         <Link to={`/${setup.route_prefix}/edit/${item.id}`}>
                             Edit
@@ -40,6 +41,8 @@ const TableRowAction: React.FC<Props> = ({ item }: Props) => {
                     {/* <li>
                         <RestoreButton item={item} />
                     </li> */}
+
+                    {children}
                 </ul>
             </div>
         </>
