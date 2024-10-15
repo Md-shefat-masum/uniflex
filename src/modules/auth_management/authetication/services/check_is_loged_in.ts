@@ -16,36 +16,41 @@ const check_is_loged_in = async (
         return;
     }
 
-    const decoded = jwt.verify(token.slice(7), secretKey);
-    let models = await db();
-    let user = await models.UserModel.findByPk(decoded.id);
-
-    if (user && user.token == decoded.token) {
-        (request as anyObject).user = user;
-        if(user.role == 'customer'){
-            return reply.redirect('/customer');
+    try {
+        const decoded = jwt.verify(token.slice(7), secretKey);
+        let models = await db();
+        let user = await models.UserModel.findByPk(decoded.id);
+    
+        if (user && user.token == decoded.token) {
+            (request as anyObject).user = user;
+            if(user.role == 'customer'){
+                return reply.redirect('/customer');
+            }
+            else if(user.role == 'admin'){
+                return reply.redirect('/management');
+            }
+            else if(user.role == 'super_admin'){
+                return reply.redirect('/management');
+            }
+            else if(user.designation == 'mo'){
+                return reply.redirect('/mo');
+            }
+            else if(user.designation == 'agm'){
+                return reply.redirect('/agm');
+            }
+            else if(user.designation == 'gm'){
+                return reply.redirect('/gm');
+            }
+            else if(user.designation == 'ed'){
+                return reply.redirect('/ed');
+            }
+        } else {
+            return;
         }
-        else if(user.role == 'admin'){
-            return reply.redirect('/management');
-        }
-        else if(user.role == 'super_admin'){
-            return reply.redirect('/management');
-        }
-        else if(user.designation == 'mo'){
-            return reply.redirect('/mo');
-        }
-        else if(user.designation == 'agm'){
-            return reply.redirect('/agm');
-        }
-        else if(user.designation == 'gm'){
-            return reply.redirect('/gm');
-        }
-        else if(user.designation == 'ed'){
-            return reply.redirect('/ed');
-        }
-    } else {
+    } catch (error) {
+        console.log(error);
         return;
-    }
+    }    
 };
 
 export default check_is_loged_in;

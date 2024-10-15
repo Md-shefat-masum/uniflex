@@ -12,6 +12,18 @@ import custom_error from '../helpers/custom_error';
 import error_trace from '../helpers/error_trace';
 import moment from 'moment';
 
+function incrementString(str:string) {
+    let numPart = str.match(/\d+/);
+    let nonNumPart = str.replace(/\d+/g, '');
+    
+    if (numPart) {
+        let num = parseInt(numPart[0], 10);
+        num++;
+        return nonNumPart + num.toString().padStart(5,'0'); 
+    }
+    return str;
+}
+
 /** validation rules */
 async function validate(req: Request) {
     let field = '';
@@ -52,6 +64,38 @@ async function validate(req: Request) {
             )
             .run(req);
     }
+
+    var element = 'uid';
+    await body(element)
+            .not()
+            .isEmpty()
+            .custom(async (value) => {
+                let models = await db();
+                let user = await models.UserModel.findOne({
+                    where: {
+                        'uid': value,
+                    }
+                });
+
+                if(user){
+                    let user = await models.UserModel.findOne({
+                        where: {
+                            'designation': req.body?.designation,
+                        },
+                        order: [['id','DESC']],
+                    });
+
+                    let latest = user?.uid;
+
+                    throw new Error(
+                        `the <b>${value}</b> is taken. use ${incrementString(latest || 'uc00001')}`,
+                    );
+                }
+            })
+            // .withMessage(
+            //     `the <b>UID </b> is taken`,
+            // )
+            .run(req);
 
     let check_array:any = [
         // 'reference',

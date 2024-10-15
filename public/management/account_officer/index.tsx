@@ -25,9 +25,9 @@ if (container) {
 
 (window as any).loader = (type = 'in') => {
     if (type == 'in')
-        (window as any).$('.loader-wrapper').fadeIn('slow');
+        (window as any).jQuery('.loader-wrapper').fadeIn('slow');
     if (type == 'out')
-        (window as any).$('.loader-wrapper').fadeOut('slow');
+        (window as any).jQuery('.loader-wrapper').fadeOut('slow');
 }
 
 axios.interceptors.request.use(

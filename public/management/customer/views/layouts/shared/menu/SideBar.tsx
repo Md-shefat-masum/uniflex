@@ -35,7 +35,7 @@ const SideBar: React.FC<Props> = (props: Props) => {
 
 function active_link(hash) {
     let url = new URL(hash);
-    (window as any).$(`.sidebar-submenu a`).removeClass('active');
+    (window as any).jQuery(`.sidebar-submenu a`).removeClass('active');
     (window as any)
         .$(`.sidebar-submenu a[href="${url.hash}"]`)
         .addClass('active');
@@ -43,8 +43,8 @@ function active_link(hash) {
 function init_nav_action() {
     var animationSpeed = 300,
         subMenuSelector = '.sidebar-submenu';
-    (window as any).$('.sidebar-menu').on('click', 'li a', function (e) {
-        var $this = (window as any).$(this);
+    (window as any).jQuery('.sidebar-menu').on('click', 'li a', function (e) {
+        var $this = (window as any).jQuery(this);
         var checkElement = $this.next();
         if (checkElement.is(subMenuSelector) && checkElement.is(':visible')) {
             checkElement.slideUp(animationSpeed, function () {

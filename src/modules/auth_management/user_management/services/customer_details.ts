@@ -30,6 +30,11 @@ async function customer_details(
             },
             include: [
                 {
+                    model: models.UserModel,
+                    as: "mo_info",
+                    attributes: ['id','name','uid']
+                },
+                {
                     model: models.UserProjectCustomerInformationModel,
                     as: "project_customer_information",
                     include: [

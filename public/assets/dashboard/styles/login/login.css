@@ -150,7 +150,7 @@ body {
   right: -5px;
   bottom: 0;
   text-transform: uppercase;
-  width: 61px;
+  width: 93px;
   padding: 2px;
   padding-right: 15px;
   padding-left: 35px;
@@ -222,5 +222,8 @@ body {
   color: var(--text_error);
   font-size: 14px;
   padding: 5px;
+}
+.d-none {
+  display: none;
 }
 /*# sourceMappingURL=./login.css.map */

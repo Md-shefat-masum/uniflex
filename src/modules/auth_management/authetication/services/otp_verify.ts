@@ -14,7 +14,6 @@ import { env } from 'process';
 import error_trace from '../helpers/error_trace';
 import custom_error from '../helpers/custom_error';
 import send_otp from './send_otp';
-import send_email from './send_email';
 
 async function validate(req: Request) {
     await body('email')
@@ -23,28 +22,18 @@ async function validate(req: Request) {
         .withMessage('the email field is required')
         .run(req);
 
-    await body('password')
+    await body('otp')
         .not()
         .isEmpty()
-        .withMessage('the password field is required')
+        .withMessage('the otp field is required')
         .run(req);
 
     let result = await validationResult(req);
 
     return result;
 }
-/**
- * Performs user login authentication.
- *
- * @param fastify_instance - The Fastify instance.
- * @param req - The Fastify request object.
- * @returns A promise that resolves to a responseObject containing the authentication result.
- * @throws If there is a validation error, a custom_error with code 422 and the validation errors is thrown.
- *         If there is a wrong password, a custom_error with code 422 and a specific error message is thrown.
- *         If there is a wrong email, a custom_error with code 422 and a specific error message is thrown.
- *         If there is a server error, a custom_error with code 500 and the error message is thrown.
- */
-async function login(
+
+async function otp_verify(
     fastify_instance: FastifyInstance,
     req: FastifyRequest,
 ): Promise<responseObject> {
@@ -87,31 +76,10 @@ async function login(
             }
 
             if (data) {
-                // let otp = Math.round(Math.random()*100000);
-                // let res = await send_otp(data.phone_number, otp);
-                // send_email(data.email, 'login otp '+otp, 'uniflex login otp '+otp);
+                
+                let check_otp = data.forget_code == body.otp;
 
-                // if(res){
-                //     data.forget_code = otp;
-                //     await data.save();
-                // }else{
-                //     return response(500, 'otp sending failed', [
-                //         {
-                //             type: 'field',
-                //             value: '',
-                //             msg: 'system error',
-                //             path: 'email',
-                //             location: 'body',
-                //         },
-                //     ]);
-                // }
-
-                let check_pass = await bcrypt.compare(
-                    body.password,
-                    data.password,
-                );
-
-                if (check_pass) {
+                if (check_otp) {
                     let jwt = require('jsonwebtoken');
                     const secretKey = env.JTI;
                     const user_agent = req.headers['user-agent'];
@@ -120,16 +88,16 @@ async function login(
                         { id: data.id, token: secret, user_agent },
                         secretKey,
                     );
-
+                    data.forget_token = null;
                     data.token = secret;
                     await data.save();
                 } else {
-                    return response(422, 'wrong password', [
+                    return response(422, 'wrong otp', [
                         {
                             type: 'field',
                             value: '',
-                            msg: 'the given password is incorrect',
-                            path: 'password',
+                            msg: 'the given otp is incorrect',
+                            path: 'otp',
                             location: 'body',
                         },
                     ]);
@@ -137,7 +105,7 @@ async function login(
                 
             }
         }
-        return response(201, 'authentication success', {
+        return response(201, 'authentication success', { 
             token, 
             role: data.role, 
             designation: data.designation,
@@ -154,4 +122,4 @@ async function login(
     }
 }
 
-export default login;
+export default otp_verify;

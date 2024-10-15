@@ -42,9 +42,9 @@ const EntryEdit: React.FC<Props> = (props: Props) => {
 
         const response = await dispatch(update_and_approve(new FormData(e.target)) as any);
         if (!Object.prototype.hasOwnProperty.call(response, 'error')) {
-            e.target.reset();
-            localStorage.setItem('booking', JSON.stringify(response.payload.data))
-            window.open("/print-payment-invoice?id=" + response.payload.data?.id, '_blank')
+            // e.target.reset();
+            // localStorage.setItem('booking', JSON.stringify(response.payload.data))
+            // window.open("/print-payment-invoice?id=" + response.payload.data?.id, '_blank')
         }
     }
 

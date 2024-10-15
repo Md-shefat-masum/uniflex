@@ -12,7 +12,7 @@ const check_auth_and_redirect = async (
     // const token = request.headers.authorization;
     const token = request.cookies.token;
     
-    console.log({token});
+    // console.log({token});
     
     if (!token || !token.startsWith('Bearer ')) {
         return reply.redirect('/login');

@@ -21,7 +21,7 @@ export default function (fastify: FastifyInstance) {
             let data: responseObject = await all(fastify, req);
             res
             .code(data.status)
-            .header('Cache-Control', 'public, max-age=30') 
+            // .header('Cache-Control', 'public, max-age=30') 
             .send(data);
         },
 

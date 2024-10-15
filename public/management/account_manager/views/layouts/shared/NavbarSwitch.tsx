@@ -4,7 +4,7 @@ export interface Props {}
 
 const NavbarSwitch: React.FC<Props> = (props: Props) => {
     function toggle() {
-        (window as any).$('.page-body-wrapper').toggleClass('sidebar-close');
+        (window as any).jQuery('.page-body-wrapper').toggleClass('sidebar-close');
     }
     return (
         <>

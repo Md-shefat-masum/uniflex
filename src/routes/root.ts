@@ -28,8 +28,6 @@ module.exports = async function (fastify: FastifyInstance) {
             // { preHandler: check_auth_and_redirect },
             async (_req: FastifyRequest, reply: FastifyReply) => {
                 let role = (_req as any).user?.role;
-                console.log(role);
-                
                 if(['admin','super_admin'].includes(role)) 
                     reply.redirect(301, '/');
 
@@ -40,8 +38,6 @@ module.exports = async function (fastify: FastifyInstance) {
             '/customer',
             { preHandler: check_auth_and_redirect },
             async (_req: FastifyRequest, reply: FastifyReply) => {
-                console.log((_req as any).user);
-                
                 if((_req as any).user.role != 'customer') reply.redirect(301, '/');
                 return reply.view('dashboard/customer.ejs');
             },
@@ -82,7 +78,6 @@ module.exports = async function (fastify: FastifyInstance) {
             '/accountant-manager',
             { preHandler: check_auth_and_redirect },
             async (_req: FastifyRequest, reply: FastifyReply) => {
-                console.log((_req as any).user);
                 if((_req as any).user.role != 'account_manager') return reply.redirect(301, '/');
                 return reply.view('dashboard/account_manager.ejs');
             },

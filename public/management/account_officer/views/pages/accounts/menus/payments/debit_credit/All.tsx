@@ -99,8 +99,8 @@ const All: React.FC<Props> = (props: Props) => {
                                             <tr>
                                                 <td></td>
                                                 <td>{log.id}</td>
-                                                <td>{log.category.title}</td>
-                                                <td>{log.user.name}</td>
+                                                <td>{log.category?.title}</td>
+                                                <td>{log.user?.name}</td>
                                                 <td>{new Date(log.date).toDateString()}</td>
                                                 <td>{log.amount_in_text}</td>
                                                 <td>

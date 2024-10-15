@@ -11,7 +11,6 @@ import internal_income from '../views/pages/accounts/menus/payments/internal_inc
 import expense from '../views/pages/accounts/menus/payments/expense/config/store';
 import debit_credit from '../views/pages/accounts/menus/payments/debit_credit/config/store';
 
-import booking from '../views/pages/booking/config/store';
 import project from '../views/pages/project/config/store';
 import project_payment from '../views/pages/project/menus/project_payment/config/store';
 
@@ -30,7 +29,6 @@ const store = configureStore({
         common_store: commonStore.reducer,
         debit_credit: debit_credit.reducer,
 
-        booking: booking.reducer,
         project: project.reducer,
         project_payment: project_payment.reducer,
 

@@ -12,6 +12,7 @@ module.exports = async function (fastify: FastifyInstance) {
         async (route, opts) => {
             route
                 .post(`/login`, controllerInstance.login)
+                .post(`/otp-verify`, controllerInstance.otp_verify)
                 .post(`/register`, controllerInstance.register)
                 .post(`/forget`, controllerInstance.forget);
         },

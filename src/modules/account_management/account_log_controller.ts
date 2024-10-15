@@ -24,6 +24,7 @@ import todays_collection from './services/todays_collection';
 import seven_days_collection from './services/seven_days_collection';
 import update_and_approve from './services/update_and_approve';
 import approve_payment from './services/approve_payment';
+import update_and_approve_expense from './services/update_and_approve_expense';
 
 export default function (fastify: FastifyInstance) {
     return {
@@ -101,6 +102,11 @@ export default function (fastify: FastifyInstance) {
 
         update_and_approve: async function (req: FastifyRequest, res: FastifyReply) {
             let data: responseObject = await update_and_approve(fastify, req);
+            res.code(data.status).send(data);
+        },
+
+        update_and_approve_expense: async function (req: FastifyRequest, res: FastifyReply) {
+            let data: responseObject = await update_and_approve_expense(fastify, req);
             res.code(data.status).send(data);
         },
        

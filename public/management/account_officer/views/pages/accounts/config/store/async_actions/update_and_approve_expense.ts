@@ -6,6 +6,7 @@ import setup from '../../setup';
 import { end_point } from '../../../../../../config/api';
 import storeSlice from '..';
 import { anyObject } from '../../../../../../common_types/object';
+import { all } from './all';
 
 type ReturnType = void;
 type PayloadType = { [key: string]: any };
@@ -17,23 +18,29 @@ type ThunkArgument = {
 const api_prefix = setup.api_prefix;
 const store_prefix = setup.store_prefix;
 
-const fetch_api = async (param: anyObject, thunkAPI) => {
+const fetch_api = async (param, thunkAPI) => {
     const state = thunkAPI.getState();
     const dispatch = thunkAPI.dispatch;
 
     dispatch(storeSlice.actions.set_is_loading(true));
-    dispatch(storeSlice.actions.set_loading_text('fething data..'));
+    dispatch(storeSlice.actions.set_loading_text('updating..'));
 
-    const response = await axios.get(`${end_point}/${api_prefix}/${param.id}`);
+    const response = await axios.post(
+        `${end_point}/${api_prefix}/update-and-approve-expense`,
+        param,
+    );
 
-    dispatch(storeSlice.actions.set_is_loading(false));
-    dispatch(storeSlice.actions.set_item(response.data.data));
+    dispatch(all({}));
+    dispatch(storeSlice.actions.set_is_loading(true));
 
+    (window as anyObject).toaster(
+        `${response.status} - ${response.data.message}`,
+    );
     return response.data;
     // thunkAPI.dispatch(storeSlice.actions.my_action())
 };
 
-export const details = createAsyncThunk<ReturnType, PayloadType, ThunkArgument>(
-    `${store_prefix}/details`,
+export const update_and_approve_expense = createAsyncThunk<ReturnType, PayloadType, ThunkArgument>(
+    `${store_prefix}/update-and-approve-expense`,
     fetch_api,
 );

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <title>Account Payment Receive Invoice</title>
     <style>
         * {
             margin: 0;
@@ -76,12 +76,22 @@
             padding: 0 1rem;
             font-size: 14px;
         }
+
+        body {
+            max-width: 900px;
+        }
+
+        @media print {
+            body {
+                max-width: 100vw;
+            }
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
 </head>
 
-<body style="max-width: 900px;margin:auto;">
+<body style="margin:auto;">
     <div id="app">
         <div class="wrapper-div" v-for="invoice_for in ['OFFICE COPY', 'CUSTOMER COPY']" :key="invoice_for">
             <h1>
@@ -126,7 +136,7 @@
                         Road-{{ customer_informations.road_no }}
                     </td>
                     <td>Purpose</td>
-                    <td>: {{ customer_informations.booking_type }}</td>
+                    <td>: {{ customer_informations.payment_method.replace('_',' ') }}</td>
                 </tr>
                 <tr>
                     <td>Term</td>
@@ -156,7 +166,7 @@
                 </tr> -->
                 <tr>
                     <td>Received Amount</td>
-                    <td>: {{payment_info.amount}}</td>
+                    <td>: {{new Intl.NumberFormat().format(payment_info.amount)}}</td>
                 </tr>
                 <tr>
                     <td>In word</td>
@@ -167,7 +177,8 @@
                 <tr>
                     <td>No Of Installment Paid</td>
                     <td>
-                        <input type="text" v-model="installment_count" style="border: 1px solid rgb(242, 242, 242);">
+                        {{ installment_count }}
+                        <!-- <input type="text" v-model="installment_count" style="border: 1px solid rgb(242, 242, 242);"> -->
                     </td>
                     <td>Total Tk Paid</td>
                     <td>{{payment_info.amount_in_text}}</td>
@@ -182,6 +193,10 @@
             </table>
             <div class="footer">
                 <bold>Cashier</bold>
+                <div
+                    style="border: 1px solid gray; height: 30px; width: 30px;border-radius: 50%;text-align: center;line-height: 30px;">
+                    sill
+                </div>
                 <bold>Authorised</bold>
             </div>
         </div>
@@ -210,10 +225,10 @@
                         } catch (error) {
                             this.customer_informations = data.user_info.project_customer_information.customer_informations;
                         }
-                        this.next_date = moment(this.payment_info.date).add(30,'days').format('yyyy-MM-DD');
+                        this.next_date = moment(this.payment_info.date).add(30, 'days').format('yyyy-MM-DD');
                         this.installment_count = (this.payment_info.installment_no)?.toString().padStart(4, '0');
                     })
-                    
+
             }
         })
     </script>

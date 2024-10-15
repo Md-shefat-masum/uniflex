@@ -23,7 +23,7 @@ if (container) {
     );
 }
 
-// (window as any).$ = (window as any).jQuery;
+// (window as any).jQuery = (window as any).jQuery;
 
 (window as any).loader = (type = 'in') => {
     if (type == 'in')

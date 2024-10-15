@@ -17,6 +17,10 @@ import { details } from './config/store/async_actions/details';
 import storeSlice from './config/store';
 import { update } from './config/store/async_actions/update';
 import { anyObject } from '../../../common_types/object';
+import CreateBookingPropertyInformations from './helpers/CreateBookingPropertyInformations';
+import CreateBookingPaymentInfo from './helpers/CreateBookingPaymentInfo';
+import CreateBookingBankPayment from './helpers/CreateBookingBankPayment';
+import CreateBookingWetness from './helpers/CreateBookingWetness';
 export interface Props { }
 
 const Create: React.FC<Props> = (props: Props) => {
@@ -178,60 +182,32 @@ const Create: React.FC<Props> = (props: Props) => {
                                                 label: 'Application Date',
                                             },
                                             {
-                                                name: 'applicant_name_bengali',
-                                                placeholder:
-                                                    "Enter applicant's name in Bengali",
-                                                type: 'text',
-                                                label: "Applicant's Name (Bengali)",
-                                            },
-                                            {
                                                 name: 'applicant_name_english',
                                                 placeholder:
                                                     "Enter applicant's name in English",
                                                 type: 'text',
-                                                label: "Applicant's Name (English)",
-                                            },
-                                            {
-                                                name: 'father_name_bengali',
-                                                placeholder:
-                                                    "Enter father's name in Bengali",
-                                                type: 'text',
-                                                label: "Father's Name (Bengali)",
+                                                label: "Applicant's Name",
                                             },
                                             {
                                                 name: 'father_name_english',
                                                 placeholder:
-                                                    "Enter father's name in English",
+                                                    "Enter father's name",
                                                 type: 'text',
-                                                label: "Father's Name (English)",
-                                            },
-                                            {
-                                                name: 'mother_name_bengali',
-                                                placeholder:
-                                                    "Enter mother's name in Bengali",
-                                                type: 'text',
-                                                label: "Mother's Name (Bengali)",
+                                                label: "Father's Name",
                                             },
                                             {
                                                 name: 'mother_name_english',
                                                 placeholder:
-                                                    "Enter mother's name in English",
+                                                    "Enter mother's name",
                                                 type: 'text',
-                                                label: "Mother's Name (English)",
-                                            },
-                                            {
-                                                name: 'husband_wife_name_bengali',
-                                                placeholder:
-                                                    "Enter husband/wife's name in Bengali",
-                                                type: 'text',
-                                                label: "Husband/Wife's Name (Bengali)",
+                                                label: "Mother's Name",
                                             },
                                             {
                                                 name: 'husband_wife_name_english',
                                                 placeholder:
-                                                    "Enter husband/wife's name in English",
+                                                    "Enter husband/wife's name",
                                                 type: 'text',
-                                                label: "Husband/Wife's Name (English)",
+                                                label: "Husband/Wife's Name",
                                             },
                                             {
                                                 name: 'email',
@@ -240,32 +216,18 @@ const Create: React.FC<Props> = (props: Props) => {
                                                 label: 'Email',
                                             },
                                             {
-                                                name: 'current_address_bengali',
-                                                placeholder:
-                                                    'Enter current address in Bengali',
-                                                type: 'text',
-                                                label: 'Current Address (Bengali)',
-                                            },
-                                            {
                                                 name: 'current_address_english',
                                                 placeholder:
                                                     'Enter current address in English',
                                                 type: 'text',
-                                                label: 'Current Address (English)',
-                                            },
-                                            {
-                                                name: 'permanent_address_bengali',
-                                                placeholder:
-                                                    'Enter permanent address in Bengali',
-                                                type: 'text',
-                                                label: 'Permanent Address (Bengali)',
+                                                label: 'Current Address',
                                             },
                                             {
                                                 name: 'permanent_address_english',
                                                 placeholder:
                                                     'Enter permanent address in English',
                                                 type: 'text',
-                                                label: 'Permanent Address (English)',
+                                                label: 'Permanent Address',
                                             },
                                             {
                                                 name: 'date_of_birth',
@@ -323,6 +285,13 @@ const Create: React.FC<Props> = (props: Props) => {
                                                 type: 'file',
                                                 label: 'Customer photo',
                                                 value_key: 'image'
+                                            },
+                                            {
+                                                name: 'customer_signature',
+                                                placeholder: 'Customer Signature',
+                                                type: 'file',
+                                                label: 'Customer Signature',
+                                                value_key: 'customer_signature'
                                             },
                                         ].map((field: anyObject) => (
                                             <div
@@ -454,165 +423,7 @@ const Create: React.FC<Props> = (props: Props) => {
                                 <div>
                                     <h5 className="mb-4">Property Details</h5>
                                     <div className="form_auto_fit">
-                                        {[
-                                            // {
-                                            //     name: 'property_location',
-                                            //     placeholder:
-                                            //         'Enter plot location',
-                                            //     type: 'text',
-                                            //     label: 'Property Location',
-                                            // },
-                                            {
-                                                name: 'file_id_no',
-                                                placeholder: 'Enter file / ID no.',
-                                                type: 'text',
-                                                label: 'File / ID No.',
-                                            },
-                                            {
-                                                name: 'property_no',
-                                                placeholder: 'Enter plot/flat no.',
-                                                type: 'text',
-                                                label: 'Property No.',
-                                            },
-                                            {
-                                                name: 'road_no',
-                                                placeholder: 'Enter road no.',
-                                                type: 'text',
-                                                label: 'Road No.',
-                                            },
-                                            {
-                                                name: 'block_no',
-                                                placeholder: 'Enter block no.',
-                                                type: 'text',
-                                                label: 'Block No.',
-                                            },
-                                            {
-                                                name: 'sector_no',
-                                                placeholder: 'Enter sector no.',
-                                                type: 'text',
-                                                label: 'Sector No.',
-                                            },
-                                            // {
-                                            //     name: 'property_type',
-                                            //     placeholder: 'Enter plot type',
-                                            //     type: 'text',
-                                            //     label: 'Property Type',
-                                            // },
-                                            {
-                                                name: 'size_of_property_katha',
-                                                placeholder:
-                                                    'Size Of Plot/Flat (Katha)',
-                                                type: 'number',
-                                                label: 'Size Of Property (Katha)',
-                                            },
-                                            {
-                                                name: 'size_of_property_land_percentage',
-                                                placeholder:
-                                                    'Size Of Property Land (Percentage)',
-                                                type: 'number',
-                                                label: 'Size Of Property Land (Percentage)',
-                                            },
-                                            {
-                                                name: 'property_price_digit',
-                                                placeholder:
-                                                    'Enter property price (digit)',
-                                                type: 'number',
-                                                label: 'Property Price (Digit)',
-                                                readonly: true,
-                                                callback: function (e, value) {
-                                                    let el = document.querySelector('#property_price_text') as HTMLInputElement | null;
-                                                    let el2 = document.querySelector('#property_price_text_bangla') as HTMLInputElement | null;
-                                                    if (el && el2) {
-                                                        el.value = (window as any).convertAmount(value).en + ` taka only`;
-                                                        el2.value = (window as any).convertAmount(value).bn + ` টাকা মাত্র`;
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                name: 'property_price_text',
-                                                placeholder:
-                                                    'Enter property price (text)',
-                                                type: 'text',
-                                                label: 'Property Price (Text)',
-                                                readonly: true,
-                                            },
-                                            {
-                                                name: 'property_price_text_bangla',
-                                                placeholder:
-                                                    'Enter property price (bangla text)',
-                                                type: 'text',
-                                                label: 'Property Price (Bangla Text)',
-                                                readonly: true,
-                                            },
-                                            // {
-                                            //     name: 'payment_type',
-                                            //     placeholder: 'Enter payment type',
-                                            //     type: 'text',
-                                            //     label: 'Payment Type (Booking/Down/Full)',
-                                            // },
-                                            {
-                                                name: 'payment_digit',
-                                                placeholder:
-                                                    'Enter payment (digit)',
-                                                type: 'number',
-                                                label: 'Payment (Digit)',
-                                                readonly: true,
-                                                callback: function (e, value) {
-                                                    let el = document.querySelector('#payment_text') as HTMLInputElement | null;
-                                                    let el2 = document.querySelector('#payment_text_bangla') as HTMLInputElement | null;
-                                                    if (el && el2) {
-                                                        el.value = (window as any).convertAmount(value).en + ` taka only`;
-                                                        el2.value = (window as any).convertAmount(value).bn + ` টাকা মাত্র`;
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                name: 'payment_text',
-                                                placeholder: 'Enter payment (text)',
-                                                type: 'text',
-                                                label: 'Payment (Text)',
-                                                readonly: true,
-                                            },
-                                            {
-                                                name: 'payment_text_bangla',
-                                                placeholder: 'Enter payment (bangla text)',
-                                                type: 'text',
-                                                label: 'Payment ( Bangla Text)',
-                                                readonly: true,
-                                            },
-                                            // {
-                                            //     name: 'check_cash_po_dd_no',
-                                            //     placeholder:
-                                            //         'Enter check / cash / P.O. / D.D. no.',
-                                            //     type: 'text',
-                                            //     label: 'Check / Cash / P.O. / D.D. No.',
-                                            // },
-                                            {
-                                                name: 'branch',
-                                                placeholder: 'Enter branch',
-                                                type: 'text',
-                                                label: 'Branch',
-                                            },
-                                            {
-                                                name: 'bank',
-                                                placeholder: 'Enter bank',
-                                                type: 'text',
-                                                label: 'Bank',
-                                            },
-                                            {
-                                                name: 'date',
-                                                placeholder: 'Enter date',
-                                                type: 'date',
-                                                label: 'Date',
-                                            },
-                                            {
-                                                name: 'swift_code_routing_no',
-                                                placeholder:
-                                                    'Enter swift code / routing no.',
-                                                type: 'text',
-                                                label: 'Swift Code / Routing No.',
-                                            },
-                                        ].map((field) => (
+                                        {CreateBookingPropertyInformations.map((field) => (
                                             <div
                                                 className="form-group form-vertical"
                                                 key={field.name}
@@ -639,6 +450,7 @@ const Create: React.FC<Props> = (props: Props) => {
                                                 label="Payment Method"
                                                 value={get_value('payment_method')}
                                                 name="payment_method"
+                                                readonly={true}
                                                 values={[
                                                     {
                                                         text: '--select--',
@@ -664,6 +476,7 @@ const Create: React.FC<Props> = (props: Props) => {
                                                 label="Payment By"
                                                 value={get_value('check_cash_po_dd_no')}
                                                 name="check_cash_po_dd_no"
+                                                readonly={true}
                                                 values={[
                                                     {
                                                         text: '--select--',
@@ -682,97 +495,32 @@ const Create: React.FC<Props> = (props: Props) => {
                                                         value: 'surjopay',
                                                     },
                                                 ]}
+                                                callback={function (e, value) {
+                                                    let el = document.getElementById('bank_payment_block');
+                                                    if (el && value == 'bank') {
+                                                        el.classList.remove('d-none');
+                                                    } else if (el) {
+                                                        el.classList.add('d-none');
+                                                    }
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="form-group form-vertical">
+                                            <Select
+                                                label="Are you a loan recipient?"
+                                                name="r_u_a_loan_recipient"
+                                                value={get_value('r_u_a_loan_recipient')}
+                                                values={[
+                                                    { text: '--select--', value: '' },
+                                                    { text: 'YES', value: 'yes' },
+                                                    { text: 'NO', value: 'no' },
+                                                ]}
                                             />
                                         </div>
                                     </div>
-                                    <div className="form-group form-vertical">
-                                        <Select
-                                            label="Are you a loan recipient?"
-                                            name="r_u_a_loan_recipient"
-                                            value={get_value('r_u_a_loan_recipient')}
-                                            values={[
-                                                { text: '--select--', value: '' },
-                                                { text: 'YES', value: 'yes' },
-                                                { text: 'NO', value: 'no' },
-                                            ]}
-                                        />
-                                    </div>
+
                                     <div className="form_auto_fit">
-                                        {[
-                                            {
-                                                name: 'payment_date',
-                                                placeholder: 'Select date',
-                                                type: 'date',
-                                                label: 'Payment Date',
-                                            },
-                                            {
-                                                name: 'total_share',
-                                                placeholder: 'Total Share',
-                                                type: 'text',
-                                                label: 'Total Share',
-                                            },
-                                            {
-                                                name: 'have_to_pay_amount',
-                                                placeholder: 'Have to pay amount',
-                                                type: 'text',
-                                                label: 'Have to pay amount',
-                                                callback: function (e, value) {
-                                                    let el = document.querySelector('#have_to_pay_amount_text') as HTMLInputElement | null;
-                                                    if (el) {
-                                                        el.value = (window as any).convertAmount(value).en + ` taka only`;
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                name: 'have_to_pay_amount_text',
-                                                placeholder: 'Have to pay amount in text',
-                                                type: 'text',
-                                                label: 'Have to pay amount in text',
-                                            },
-                                            {
-                                                name: 'witness_name_1',
-                                                placeholder:
-                                                    "Enter witness's name (1st)",
-                                                type: 'text',
-                                                label: "Witness's Name (1st)",
-                                            },
-                                            {
-                                                name: 'witness_mobile_number_1',
-                                                placeholder:
-                                                    "Enter witness's mobile number (1st)",
-                                                type: 'tel',
-                                                label: "Witness's Mobile Number (1st)",
-                                            },
-                                            {
-                                                name: 'witness_address_1',
-                                                placeholder:
-                                                    "Enter witness's address (1st)",
-                                                type: 'text',
-                                                label: "Witness's Address (1st)",
-                                            },
-                                            {
-                                                name: 'witness_name_2',
-                                                placeholder:
-                                                    "Enter witness's name (2nd)",
-                                                type: 'text',
-                                                label: "Witness's Name (2nd)",
-                                            },
-                                            {
-                                                name: 'witness_mobile_number_2',
-                                                placeholder:
-                                                    "Enter witness's mobile number (2nd)",
-                                                type: 'tel',
-                                                label: "Witness's Mobile Number (2nd)",
-                                            },
-                                            {
-                                                name: 'witness_address_2',
-                                                placeholder:
-                                                    "Enter witness's address (2nd)",
-                                                type: 'text',
-                                                label: "Witness's Address (2nd)",
-                                                readonly: false,
-                                            },
-                                        ].map((field) => (
+                                        {CreateBookingPaymentInfo({readonly: true}).map((field) => (
                                             <div
                                                 className="form-group form-vertical"
                                                 key={field.name}
@@ -782,43 +530,17 @@ const Create: React.FC<Props> = (props: Props) => {
                                                     placeholder={field.placeholder}
                                                     type={field.type}
                                                     label={field.label}
-                                                    value={get_value(field.name)}
                                                     callback={field.callback}
                                                     readonly={field.readonly}
+                                                    value={get_value(field.name)}
                                                 />
                                             </div>
                                         ))}
                                     </div>
-                                </div>
-                                {/* Office Space Requirements Only  */}
-                                <div>
-                                    <h5 className="mb-4">
-                                        Office Space Requirements Only
-                                    </h5>
-                                    <div className="form_auto_fit">
-                                        {[
-                                            {
-                                                name: 'office_only_booking_others',
-                                                placeholder: 'Others',
-                                                type: 'text',
-                                                label: 'Others',
-                                            },
-                                            {
-                                                name: 'office_only_money_receipt_no',
-                                                placeholder:
-                                                    'Enter money receipt no.',
-                                                type: 'text',
-                                                label: 'Money Receipt No.',
-                                                readonly: true,
-                                            },
-                                            {
-                                                name: 'office_only_booking_chart_making',
-                                                placeholder:
-                                                    'Enter booking chart making',
-                                                type: 'text',
-                                                label: 'Booking Chart Making',
-                                            },
-                                        ].map((field) => (
+
+                                    {/* if payment processor is bank */}
+                                    <div className="form_auto_fit d-none" id="bank_payment_block">
+                                        {CreateBookingBankPayment.map((field) => (
                                             <div
                                                 className="form-group form-vertical"
                                                 key={field.name}
@@ -828,13 +550,37 @@ const Create: React.FC<Props> = (props: Props) => {
                                                     placeholder={field.placeholder}
                                                     type={field.type}
                                                     label={field.label}
-                                                    value={get_value(field.name)}
+                                                    callback={field.callback}
                                                     readonly={field.readonly}
+                                                    value={get_value(field.name)}
                                                 />
                                             </div>
                                         ))}
                                     </div>
+
+                                    <div>
+                                        <h5 className="mb-4">Witness</h5>
+                                        <div className="form_auto_fit">
+                                            {CreateBookingWetness.map((field) => (
+                                                <div
+                                                    className="form-group form-vertical"
+                                                    key={field.name}
+                                                >
+                                                    <Input
+                                                        name={field.name}
+                                                        placeholder={field.placeholder}
+                                                        type={field.type}
+                                                        label={field.label}
+                                                        callback={field.callback}
+                                                        readonly={field.readonly}
+                                                        value={get_value(field.name)}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div className="form-group form-vertical">
                                     <label></label>
                                     <div className="form_elements">

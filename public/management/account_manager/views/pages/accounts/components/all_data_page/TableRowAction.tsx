@@ -21,11 +21,11 @@ const TableRowAction: React.FC<Props> = ({ item }: Props) => {
             />
             <div className="table_action_btns">
                 <ul>
-                    <li>
+                    {/* <li>
                         <Link to={`/${setup.route_prefix}/details/${item.id}`}>
                             Show
                         </Link>
-                    </li>
+                    </li> */}
                     {/* <li>
                         <Link to={`/${setup.route_prefix}/edit/${item.id}`}>
                             Edit

@@ -12,7 +12,7 @@
     <script src="/assets/dashboard/js/plugins/sweetalert.js"></script>
 
     <style>
-        #login .login_form .bg1{
+        #login .login_form .bg1 {
             background-color: rgb(0 0 0 / 47%);
         }
     </style>
@@ -30,18 +30,30 @@
                     <div class="bg2"></div>
                     <div class="bg3"></div>
                     <div class="form_content">
-                        <form onsubmit="login()" action="#" autocomplete="false">
+                        <form onsubmit="login()" id="login_form" action="#" autocomplete="false">
                             <div class="form_group">
                                 <div class="input_body">
                                     <span class="icon material-symbols-outlined">
                                         person
                                     </span>
-                                    <input type="text" value="" placeholder="email" name="email" id="email">
+                                    <input type="text" value="" placeholder="id / phone number / email" name="email"
+                                        id="email">
                                 </div>
                                 <label for="email">
-                                    <div class="text">Email</div>
+                                    <div class="text">Phone Number</div>
                                 </label>
                             </div>
+                            <!-- <div class="form_group d-none" id="otp_code_block">
+                                <div class="input_body">
+                                    <span class="icon material-symbols-outlined">
+                                        key
+                                    </span>
+                                    <input type="text" placeholder="otp" name="otp" id="otp">
+                                </div>
+                                <label for="otp">
+                                    <div class="text">otp code</div>
+                                </label>
+                            </div> -->
                             <div class="form_group">
                                 <div class="input_body">
                                     <span class="icon material-symbols-outlined">
@@ -55,12 +67,15 @@
                             </div>
                             <div class="form_group button_group">
                                 <div class="buttons">
-                                    <button onclick="remove_form_action_classes()" type="reset">
+                                    <button onclick="remove_form_action_classes();location.reload();" type="reset">
                                         <div class="text">reset</div>
                                     </button>
-                                    <button type="submit">
+                                    <button type="submit" id="submit_button">
                                         <div class="text">submit</div>
                                     </button>
+                                    <!-- <button type="button" onclick="otp_verify()" class="d-none" id="verify_button">
+                                        <div class="text">Verify Otp</div>
+                                    </button> -->
                                 </div>
                             </div>
                         </form>
@@ -118,33 +133,44 @@
             event.preventDefault();
             axios.post("/api/v1/auth/login", new FormData(event.currentTarget))
                 .then(res => {
-                    if(res.data.data.role == 'customer'){
+                    window.toaster("user logged in", "success");
+
+                    if (res.data.data.role == 'customer') {
                         return location.href = "/customer";
                     }
-                    else if(res.data.data.role == 'admin'){
+                    else if (res.data.data.role == 'admin') {
                         return location.href = "/management";
                     }
-                    else if(res.data.data.role == 'super_admin'){
+                    else if (res.data.data.role == 'super_admin') {
                         return location.href = "/management";
                     }
-                    else if(res.data.data.designation == 'mo'){
+                    else if (res.data.data.designation == 'mo') {
                         return location.href = "/mo";
                     }
-                    else if(res.data.data.designation == 'agm'){
+                    else if (res.data.data.designation == 'agm') {
                         return location.href = "/agm";
                     }
-                    else if(res.data.data.designation == 'gm'){
+                    else if (res.data.data.designation == 'gm') {
                         return location.href = "/gm";
                     }
-                    else if(res.data.data.designation == 'ed'){
+                    else if (res.data.data.designation == 'ed') {
                         return location.href = "/ed";
                     }
-                    else if(res.data.data.role == 'account_officer'){
+                    else if (res.data.data.role == 'account_officer') {
                         return location.href = "/accountant-officer";
                     }
-                    else if(res.data.data.role == 'account_manager'){
+                    else if (res.data.data.role == 'account_manager') {
                         return location.href = "/accountant-manager";
                     }
+
+                    
+
+                    // if (res.data.data.stage == 'opt sent') {
+                    //     otp_code_block.classList.remove('d-none');
+                    //     submit_button.remove();
+                    //     verify_button.classList.remove('d-none');
+                    //     window.toaster("otp sent to your number", "success");
+                    // }
                 })
                 .catch(err => {
                     let { message, data } = err.response.data;
@@ -152,6 +178,21 @@
                     console.log(data);
                 })
         }
+
+        const otp_verify = () => {
+            event.preventDefault();
+            axios.post("/api/v1/auth/otp-verify", new FormData(login_form))
+                .then(res => {
+                    window.toaster("otp validated.", "success");
+                })
+                .catch(err => {
+                    let { message, data } = err.response.data;
+                    window.toaster(message, "error");
+                    console.log(data);
+                })
+        }
+
+
     </script>
 </body>
 

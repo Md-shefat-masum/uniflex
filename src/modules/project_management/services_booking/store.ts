@@ -50,7 +50,6 @@ async function validate(req: Request) {
         'office_only_money_receipt_no',
         'check_cash_po_dd_no',
         'payment_method',
-        'total_share',
     ];
 
     for (let index = 0; index < fields.length; index++) {
@@ -153,6 +152,7 @@ async function store(
     let image_path = "";
     let nominee_photo_1 = "";
     let nominee_photo_2 = "";
+    let customer_signature = "";
 
     if(body['customer_image']?.ext){
         image_path =
@@ -176,6 +176,14 @@ async function store(
             moment().format('YYYYMMDDHHmmss3') +
             body['nominee_photo_2'].ext;
         await (fastify_instance as any).upload(body['nominee_photo_2'], nominee_photo_2);
+    }
+    
+    if(body['customer_signature']?.ext){
+        customer_signature =
+            'uploads/projects/' +
+            moment().format('YYYYMMDDHHmmss4') +
+            body['customer_signature'].ext;
+        await (fastify_instance as any).upload(body['customer_signature'], customer_signature);
     }
 
     const bcrypt = require('bcrypt');
@@ -270,6 +278,7 @@ async function store(
     project_customer_info_inputs.customer_informations.nominee_photo_1 = nominee_photo_1;
     project_customer_info_inputs.customer_informations.nominee_photo_2 = nominee_photo_2;
     project_customer_info_inputs.customer_informations.customer_image = image_path;
+    project_customer_info_inputs.customer_informations.customer_signature = customer_signature;
     
     /** print request data into console */
     // console.clear();

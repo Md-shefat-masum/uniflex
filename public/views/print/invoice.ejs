@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <title>Booking Invoice</title>
     <style>
         * {
             margin: 0;
@@ -77,18 +77,28 @@
             font-size: 14px;
         }
 
-        .main_data_body{
+        .main_data_body {
             background-image: url('/uniflex_logo_bw.png');
             background-position: center;
             background-repeat: no-repeat;
             background-size: 50%;
+        }
+
+        body {
+            max-width: 900px;
+        }
+
+        @media print {
+            body {
+                max-width: 100vw;
+            }
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
 </head>
 
-<body style="max-width: 900px;margin:auto;">
+<body style="margin:auto;">
     <div id="app">
         <div class="wrapper-div" v-for="invoice_for in ['OFFICE COPY', 'CUSTOMER COPY']" :key="invoice_for">
             <h1>
@@ -125,18 +135,18 @@
                 <tr>
                     <td>Plot Description</td>
                     <td>
-                        : 
+                        :
                         Plot No- {{ customer_informations.property_no }},
                         katha-{{ customer_informations.size_of_property_katha }},
-                        Block-{{ customer_informations.block_no }}, 
+                        Block-{{ customer_informations.block_no }},
                         Road-{{ customer_informations.road_no }}
                     </td>
                     <td>Purpose</td>
-                    <td>: {{ customer_informations.booking_type }}</td>
+                    <td>: {{ customer_informations.payment_method.replace('_',' ') }}</td>
                 </tr>
                 <tr>
                     <td>Term</td>
-                    <td>: 06 Year</td>
+                    <td>: {{ customer_informations.property_payment_terms }}</td>
                     <td></td>
                     <td></td>
                     <!-- <td>Cheque No. & Date</td>
@@ -152,17 +162,17 @@
                 </tr>
                 <tr>
                     <td>Plot/Flat Total Price</td>
-                    <td>: {{ customer_informations.have_to_pay_amount }}</td>
+                    <td>: {{ new Intl.NumberFormat().format(customer_informations.have_to_pay_amount) }}</td>
                     <td>Agency ID</td>
                     <td>: {{ booking.mo?.uid }}</td>
                 </tr>
                 <tr>
                     <td>Booking Amount</td>
-                    <td>: {{customer_informations.payment_digit}}</td>
+                    <td>: {{new Intl.NumberFormat().format(customer_informations.payment_digit)}}</td>
                 </tr>
                 <tr>
                     <td>Received Amount</td>
-                    <td>: {{customer_informations.payment_digit}}</td>
+                    <td>: {{new Intl.NumberFormat().format(customer_informations.payment_digit)}}</td>
                 </tr>
                 <tr>
                     <td>In word</td>
@@ -173,7 +183,8 @@
                 <tr>
                     <td>No Of Installment Paid</td>
                     <td>
-                        <input type="text" v-model="installment_count" style="border: 1px solid rgb(242, 242, 242);">
+                        <!-- <input type="text" v-model="installment_count" style="border: 1px solid rgb(242, 242, 242);"> -->
+                        {{ installment_count }}
                     </td>
                     <td>Total Tk Paid</td>
                     <td>{{customer_informations.payment_text}}</td>
@@ -188,21 +199,25 @@
             </table>
             <div class="footer">
                 <bold>Cashier</bold>
+                <div
+                    style="border: 1px solid gray; height: 30px; width: 30px;border-radius: 50%;text-align: center;line-height: 30px;">
+                    sill
+                </div>
                 <bold>Authorised</bold>
             </div>
         </div>
-    
+
     </div>
     <script>
         new Vue({
             el: '#app',
-            data: ()=>({
+            data: () => ({
                 booking: {},
                 customer_informations: {},
                 next_date: new Date(),
                 installment_count: '001'
             }),
-            mounted: function(){
+            mounted: function () {
                 this.booking = JSON.parse(localStorage.getItem('booking'));
                 try {
                     this.customer_informations = JSON.parse(this.booking.details.customer_informations);
@@ -210,13 +225,13 @@
                     this.customer_informations = this.booking.details.customer_informations
                 }
 
-                this.next_date = moment(this.booking.payment_date).add(30,'days').format('yyyy-MM-DD');
+                this.next_date = moment(this.booking.payment_date).add(30, 'days').format('yyyy-MM-DD');
 
                 console.log(
-                    this.booking, 
+                    this.booking,
                     this.customer_informations
                 );
-                
+
             }
         })
     </script>

@@ -62,7 +62,7 @@ const Create: React.FC<Props> = (props: Props) => {
                         >
                             {/* Project Information */}
                             <div>
-                                <h5 className="mb-4">Personal Informations</h5>
+                                <h5 className="mb-4">Personal Informationss</h5>
                                 <div className="form_auto_fit">
                                     {[
                                         {

@@ -16,7 +16,6 @@ import debit_credit from '../views/pages/accounts/menus/payments/debit_credit/co
 
 import projects from "../views/pages/project/config/routes";
 import project_payment from "../views/pages/project/menus/project_payment/config/routes";
-import booking from "../views/pages/booking/config/routes";
 
 interface RouteTypes extends NonIndexRouteObject {}
 const router: RouteTypes[] = [
@@ -29,7 +28,6 @@ const router: RouteTypes[] = [
                 element: <T1 />,
             },
 
-            booking,
             projects,
             project_payment,
             

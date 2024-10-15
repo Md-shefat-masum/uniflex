@@ -18,7 +18,7 @@ import { payment_entry_details } from './config/store/async_actions/payment_entr
 import { useParams } from 'react-router-dom';
 import { initialState } from './config/store/inital_state';
 import { useSelector } from 'react-redux';
-import { update_and_approve } from './config/store/async_actions/update_and_approve';
+import { update_and_approve_expense } from './config/store/async_actions/update_and_approve_expense';
 
 export interface Props { }
 
@@ -42,12 +42,12 @@ const ExpenseEdit: React.FC<Props> = (props: Props) => {
         let conf = await (window as any).s_confirm("confirm and approve");
         if (!conf) return;
 
-        // const response = await dispatch(update_and_approve(new FormData(e.target)) as any);
-        // if (!Object.prototype.hasOwnProperty.call(response, 'error')) {
-        //     e.target.reset();
-        //     localStorage.setItem('booking', JSON.stringify(response.payload.data))
-        //     window.open("/print-payment-invoice?id=" + response.payload.data?.id, '_blank')
-        // }
+        const response = await dispatch(update_and_approve_expense(new FormData(e.target)) as any);
+        if (!Object.prototype.hasOwnProperty.call(response, 'error')) {
+            // e.target.reset();
+            // localStorage.setItem('booking', JSON.stringify(response.payload.data))
+            // window.open("/print-payment-invoice?id=" + response.payload.data?.id, '_blank')
+        }
     }
 
     function get_value(path: string, obj: any = state.item): any {
@@ -72,8 +72,9 @@ const ExpenseEdit: React.FC<Props> = (props: Props) => {
                             >
                                 <div>
 
+                                    <input type="hidden" name="id" value={get_value('id')} />
                                     <input type="hidden" name="type" value="expense" />
-                                    <input type="hidden" name="account_id" value="" />
+                                    <input type="hidden" name="account_id" value={get_value('account_id')} />
 
                                     <div className="form_auto_fit">
                                         <div className="form-group form-vertical">
@@ -141,7 +142,28 @@ const ExpenseEdit: React.FC<Props> = (props: Props) => {
                                                 }} />
                                         </div>
                                         <div className="form-group form-vertical">
-                                            <Input name={"amount_in_text"} value={(window as any).convertAmount(get_value('amount')).en} />
+                                            <Input name={"amount_in_text"} value={(window as any).convertAmount(get_value('amount')).en + " tk only"} />
+                                        </div>
+                                        <div className="form-group form-vertical">
+                                            <Select
+                                                label="Approval Status"
+                                                name="is_approved"
+                                                value={get_value('is_approved')}
+                                                values={[
+                                                    {
+                                                        text: 'Pending',
+                                                        value: '0',
+                                                    },
+                                                    {
+                                                        text: 'Approved',
+                                                        value: '1',
+                                                    },
+                                                    {
+                                                        text: 'Cancel',
+                                                        value: '2',
+                                                    },
+                                                ]}
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group grid-full-width form-vertical">

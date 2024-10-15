@@ -55,6 +55,7 @@ module.exports = async function (fastify: FastifyInstance) {
         
         .post(`${prefix}/update`, AccountLogControllerInstance.update)
         .post(`${prefix}/update-and-approve`, AccountLogControllerInstance.update_and_approve)
+        .post(`${prefix}/update-and-approve-expense`, AccountLogControllerInstance.update_and_approve_expense)
         .post(`${prefix}/soft-delete`, AccountLogControllerInstance.soft_delete)
         .post(`${prefix}/restore`, AccountLogControllerInstance.restore)
         .post(`${prefix}/destroy`, AccountLogControllerInstance.destroy)
