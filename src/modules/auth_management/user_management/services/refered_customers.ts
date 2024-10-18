@@ -21,11 +21,12 @@ async function refered_customers(
     let params = req.params as any;
     let user_id = params.id? params.id :(req as anyObject).user.id;
 
+    let designation = (req as anyObject).user.designation;
     try {
         let data = await models.UserModel.findAll({
             logging: true,
             where: {
-                mo: user_id,
+                [designation]: user_id,
             },
             // attributes: {
             //     exclude: ['password', 'token', 'forget_code', 'user_agent'],

@@ -24,6 +24,7 @@ const router: RouteTypes[] = [
                 path: 'profile',
                 element: <Profile />,
             },
+            
             {
                 path: 'payment',
                 element: <Payment />,

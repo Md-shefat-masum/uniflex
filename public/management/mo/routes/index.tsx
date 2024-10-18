@@ -4,13 +4,14 @@ import DashboardLayout from '../views/layouts/DashboardLayout';
 import T1 from '../views/pages/T1';
 
 import Payment from "../views/pages/Payment/Payment";
-import PaymentHistory from "../views/pages/Payment/PaymentHistory";
 import Profile from "../views/pages/Profile/Profile";
 
 import AllCustomer from "../views/pages/Customer/AllCustomer";
 import BusinessModel from "../views/pages/BusinessModel/BusinessModel";
 import ProfileDetails from '../views/pages/Profile/ProfileDetails';
 import WithdrawRequest from '../views/pages/Payment/WithdrawRequest';
+import PayoutHistory from '../views/pages/Payment/PayoutHistory';
+import CustomerPaymentHistory from '../views/pages/Payment/CustomerPaymentHistory';
 
 interface RouteTypes extends NonIndexRouteObject {}
 const router: RouteTypes[] = [
@@ -22,18 +23,12 @@ const router: RouteTypes[] = [
                 path: '',
                 element: <T1 />,
             },
-            {
-                path: 'customers',
-                element: <AllCustomer />,
-            },
+            
             {
                 path: 'payment',
                 element: <Payment />,
             },
-            {
-                path: 'payment-histories/:customer_id',
-                element: <PaymentHistory />,
-            },
+            
             {
                 path: 'profile',
                 element: <Profile />,
@@ -46,13 +41,22 @@ const router: RouteTypes[] = [
                 path: 'business-model',
                 element: <BusinessModel />,
             },
+
+            {
+                path: 'customers',
+                element: <AllCustomer />,
+            },
+            {
+                path: 'payment-histories/:customer_id',
+                element: <CustomerPaymentHistory />,
+            },
             {
                 path: 'payout-request',
                 element: <WithdrawRequest />,
             },
             {
                 path: 'payout-history',
-                element: <PaymentHistory />,
+                element: <PayoutHistory />,
             },
         ],
     },

@@ -4,6 +4,8 @@ import { anyObject, responseObject } from '../../../common_types/object';
 import response from '../helpers/response';
 import error_trace from '../helpers/error_trace';
 import custom_error from '../helpers/custom_error';
+import moment from 'moment';
+import { Op } from 'sequelize';
 
 // async function details(
 //     fastify_instance: FastifyInstance,
@@ -18,11 +20,24 @@ async function customer_payments(
 ): Promise<responseObject> {
     let models = await db();
     let params = req.params as any;
+    let query = req.query as any;
 
     try {
+        let start_date = moment().subtract(30, 'days').format('YYYY-MM-DD');
+        let end_date = moment().add(2, 'days').format('YYYY-MM-DD');
+
+        if(query.start_date && query.end_date){
+            start_date = query.start_date;
+            end_date = moment(query.end_date).add(1, 'days').format('YYYY-MM-DD');
+        }
+
         let data = await models.ProjectPaymentModel.findAll({
             where: {
                 user_id: params.id,
+                date: {
+                    [Op.gte]: start_date,
+                    [Op.lte]: end_date,
+                },
             },
             order: [['id','DESC']],
             attributes: ['id','user_id','amount','type','date'],
