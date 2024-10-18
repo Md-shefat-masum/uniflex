@@ -6,9 +6,9 @@ export interface Props {}
 const Layout: React.FC<Props> = (props: Props) => {
     return (
         <div className="management_root no_border">
-            <div className="management_heading page-header pb-0">
+            {/* <div className="management_heading page-header pb-0">
                 <h3 className="layout_heading">{setup.layout_title}</h3>
-            </div>
+            </div> */}
             <div className="management_content_root">
                 <Outlet></Outlet>
             </div>

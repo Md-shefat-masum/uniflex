@@ -30,6 +30,23 @@ async function debit_credit(
     }
 
     try {
+        let prev_debit = await models.AccountLogModel.sum('amount',{
+            where: {
+                date: {
+                    [Op.lte]: start_date,
+                },
+                type: 'expense',
+            },
+        });
+        let prev_credit = await models.AccountLogModel.sum('amount',{
+            where: {
+                date: {
+                    [Op.lte]: start_date,
+                },
+                type: 'income',
+            },
+        });
+
         let data = await models.AccountLogModel.findAll({
             where: {
                 date: {
@@ -56,7 +73,11 @@ async function debit_credit(
             ]
         });
 
-        return response(200, 'data found', data);
+        return response(200, 'data found', {
+            prev_credit,
+            prev_debit,
+            data,
+        });
         
     } catch (error: any) {
         let uid = await error_trace(models, error, req.url, req.params);

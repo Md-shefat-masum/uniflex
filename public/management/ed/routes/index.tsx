@@ -6,6 +6,7 @@ import T1 from '../views/pages/T1';
 import Payment from "../views/pages/Payment/Payment";
 import PaymentHistory from "../views/pages/Payment/PaymentHistory";
 import Profile from "../views/pages/Profile/Profile";
+import ProfileDetails from "../views/pages/Profile/ProfileDetails";
 
 import BusinessModel from "../views/pages/BusinessModel/BusinessModel";
 
@@ -30,6 +31,10 @@ const router: RouteTypes[] = [
             {
                 path: 'profile',
                 element: <Profile />,
+            },
+            {
+                path: 'profile-details',
+                element: <ProfileDetails />,
             },
             {
                 path: 'business-model',

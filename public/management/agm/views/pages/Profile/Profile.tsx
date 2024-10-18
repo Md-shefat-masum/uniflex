@@ -42,25 +42,16 @@ const Profile: React.FC<Props> = (props: Props) => {
                         <div className="card-body">
                             <form action="" onSubmit={submit_handler}>
                                 <div className="form-group form-vertical">
-                                    <Input
-                                        name={'name'}
-                                        label="Name"
-                                        value={user.name}
-                                    />
+                                    <h4>Name</h4>
+                                    <h5>{user.name}</h5>
                                 </div>
                                 <div className="form-group form-vertical">
-                                    <Input
-                                        name={'email'}
-                                        label="Email"
-                                        value={user.email}
-                                    />
+                                    <h4>Email</h4>
+                                    <h5>{user.email}</h5>
                                 </div>
                                 <div className="form-group form-vertical">
-                                    <Input
-                                        name={'phone_number'}
-                                        label="Phone Number"
-                                        value={user.phone_number}
-                                    />
+                                    <h4>Phone Number</h4>
+                                    <h5>{user.phone_number}</h5>
                                 </div>
                                 <div className="form-group form-vertical">
                                     <Input

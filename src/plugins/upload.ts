@@ -2,7 +2,9 @@
 
 import { DoneFuncWithErrOrRes, FastifyPluginOptions } from 'fastify';
 import { FastifyInstance } from 'fastify/types/instance';
+import { env } from 'process';
 
+const ftp = require('basic-ftp');
 const fp = require('fastify-plugin');
 const fs = require('node:fs');
 const path = require('path');
@@ -18,6 +20,37 @@ function ensureDirectoryExistence(filePath: String[] = []) {
         }
         return i + '/';
     }, '');
+}
+
+async function uploadToFTP(filePath="") {
+    const client = new ftp.Client();
+    client.ftp.verbose = true; // Optional, for logging
+    try {
+        // FTP server configuration
+        await client.access({
+            host: env.FTP_HOST,  // Replace with your FTP server host
+            user: env.FTP_USER,        // Replace with your FTP username
+            password: env.FTP_PASSWORD,    // Replace with your FTP password
+            secure: false                // Set to true if using FTPS
+        });
+
+        const uploadDir = path.join('uploads');  // This is the part you want to strip
+        const relativePath = filePath.split(uploadDir)[1]; // Get path after 'uploads'
+        const ftpPath = relativePath.replace(/\\/g, '/');
+
+        // Upload file
+        const fileName = path.basename(filePath);
+        const fileStream = fs.createReadStream(filePath);
+
+        console.log(`Uploading ${fileName}...`);
+        await client.uploadFrom(fileStream, `/app_files${ftpPath}`);  // Change the remote path as needed
+
+        console.log('Upload successful');
+    } catch (error) {
+        console.error('Failed to upload file:', error);
+    } finally {
+        client.close();
+    }
 }
 
 module.exports = fp(async function (
@@ -49,6 +82,7 @@ module.exports = fp(async function (
                 path_name = path_name.replace(/^\/|\/$/g, '') + '/';
                 path_name = path.resolve(appDir, path_name);
                 await fs.writeFileSync(path_name, file.data);
+                uploadToFTP(path_name);
                 return true;
             } catch (error) {
                 console.error(error);

@@ -17,6 +17,7 @@ const SideBar: React.FC<Props> = (props: Props) => {
                 
                 <MenuSingle to="/" icon="icon-dashboard" label="Dashboard" />
                 <MenuSingle to="/profile" icon="icon-dashboard" label="Profile" />
+                <MenuSingle to="/profile-details" icon="icon-list" label="Profile Informations" />
                 {/* <MenuSingle to="/customers" icon="icon-dashboard" label="Customers" /> */}
                 <MenuSingle to="/business-model" icon="icon-dashboard" label="Business Model" />
                 {/* <MenuSingle to="/payment-histories" icon="icon-dashboard" label="Payments and Revenues" /> */}

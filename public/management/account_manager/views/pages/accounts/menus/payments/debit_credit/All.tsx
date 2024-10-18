@@ -25,7 +25,7 @@ const All: React.FC<Props> = (props: Props) => {
 
     const dispatch = useAppDispatch();
 
-    const [logs, setLog] = useState<anyObject[]>([])
+    const [logs, setLog] = useState<any>({})
 
     useEffect(() => {
         // dispatch(
@@ -39,6 +39,16 @@ const All: React.FC<Props> = (props: Props) => {
                 setLog(res.data.data)
             })
     }, []);
+
+    function search_handler(e) {
+        e.preventDefault();
+        let start_date = e.target.start_date.value;
+        let end_date = e.target.end_date.value;
+        axios.get('/api/v1/account/logs/debit-credit?' + 'start_date=' + start_date + '&end_date=' + end_date)
+            .then(res => {
+                setLog(res.data.data)
+            })
+    }
 
     function quick_view(data: anyObject = {}) {
         dispatch(storeSlice.actions.set_item(data));
@@ -54,6 +64,11 @@ const All: React.FC<Props> = (props: Props) => {
     let final_credit = 0;
 
     function get_final_amount(item) {
+        
+        if (final_credit == 0) final_credit = logs.prev_credit;
+        if (final_debit == 0) final_debit = logs.prev_debit || 0;
+        if (final_amount == 0) final_amount = (logs.prev_credit - logs.prev_debit) || 0;
+        
         if (item.type == 'income') {
             final_amount += item.amount;
             final_credit += item.amount
@@ -67,7 +82,7 @@ const All: React.FC<Props> = (props: Props) => {
     return (
         <div className="page_content">
             <div className="explore_window fixed_size">
-                <Header></Header>
+                <Header search_handler={search_handler} title={"Debit Credit"}></Header>
 
                 <div className="content_body">
                     <div className="data_list">
@@ -90,11 +105,11 @@ const All: React.FC<Props> = (props: Props) => {
                                     <tr>
                                         <td colSpan={5}></td>
                                         <td>Closing Balance</td>
-                                        <td>{final_debit} </td>
-                                        <td>{final_credit} </td>
-                                        <td>{final_amount} </td>
+                                        <td>{logs.prev_debit} </td>
+                                        <td>{logs.prev_credit} </td>
+                                        <td>{logs.prev_credit - logs.prev_debit} </td>
                                     </tr>
-                                    {logs?.map((log: { [key: string]: any }) => {
+                                    {logs?.data?.map((log: { [key: string]: any }) => {
                                         return (
                                             <tr>
                                                 <td></td>
@@ -134,21 +149,21 @@ const All: React.FC<Props> = (props: Props) => {
                             </table>
                         </div>
 
-                        <Paginate
+                        {/* <Paginate
                             set_url={storeSlice.actions.set_url}
                             set_paginate={storeSlice.actions.set_paginate}
                             set_page={storeSlice.actions.set_page}
                             all={all}
                             data={state.all as any}
                             selected_paginate={state.paginate}
-                        ></Paginate>
+                        ></Paginate> */}
                     </div>
                 </div>
-                <TableFooter></TableFooter>
+                {/* <TableFooter></TableFooter> */}
             </div>
 
-            <Filter></Filter>
-            <QuickView></QuickView>
+            {/* <Filter></Filter>
+            <QuickView></QuickView> */}
         </div>
     );
 };

@@ -142,13 +142,15 @@
                         Road-{{ customer_informations.road_no }}
                     </td>
                     <td>Purpose</td>
-                    <td>: {{ customer_informations.payment_method.replace('_',' ') }}</td>
+                    <td style="text-transform: capitalize;">
+                        : {{ customer_informations.booking_type }}
+                    </td>
                 </tr>
                 <tr>
                     <td>Term</td>
                     <td>: {{ customer_informations.property_payment_terms }}</td>
-                    <td></td>
-                    <td></td>
+                    <td>Payment Type</td>
+                    <td style="text-transform: capitalize;">: {{ customer_informations.payment_method.replace('_',' ') }}</td>
                     <!-- <td>Cheque No. & Date</td>
                     <td>: &nbsp;</td> -->
                 </tr>
@@ -200,8 +202,8 @@
             <div class="footer">
                 <bold>Cashier</bold>
                 <div
-                    style="border: 1px solid gray; height: 30px; width: 30px;border-radius: 50%;text-align: center;line-height: 30px;">
-                    sill
+                    style="opacity: .3; border: 1px solid gray; height: 30px; width: 30px;border-radius: 50%;text-align: center;line-height: 30px;">
+                    Sealing
                 </div>
                 <bold>Authorised</bold>
             </div>

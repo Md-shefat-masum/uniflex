@@ -30,14 +30,8 @@ async function employee_details(
             },
             include: [
                 {
-                    model: models.UserProjectCustomerInformationModel,
-                    as: "project_customer_information",
-                    include: [
-                        {
-                            model: models.ProjectModel,
-                            as: 'project_info'
-                        }
-                    ]
+                    model: models.UserInformationModel,
+                    as: "info",
                 }
             ],
         });

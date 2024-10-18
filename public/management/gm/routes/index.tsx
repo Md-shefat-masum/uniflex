@@ -8,6 +8,7 @@ import PaymentHistory from "../views/pages/Payment/PaymentHistory";
 import Profile from "../views/pages/Profile/Profile";
 
 import BusinessModel from "../views/pages/BusinessModel/BusinessModel";
+import ProfileDetails from '../views/pages/Profile/ProfileDetails';
 
 interface RouteTypes extends NonIndexRouteObject {}
 const router: RouteTypes[] = [
@@ -30,6 +31,10 @@ const router: RouteTypes[] = [
             {
                 path: 'profile',
                 element: <Profile />,
+            },
+            {
+                path: 'profile-details',
+                element: <ProfileDetails />,
             },
             {
                 path: 'business-model',

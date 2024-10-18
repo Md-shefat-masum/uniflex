@@ -76,6 +76,18 @@
             padding: 0 1rem;
             font-size: 14px;
         }
+
+        .main_data_body {
+            background-image: url('/uniflex_logo_bw.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 50%;
+        }
+        @media print {
+            body {
+                max-width: 100vw;
+            }
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
@@ -99,7 +111,7 @@
                     {{ invoice_for }}
                 </h2>
             </div>
-            <table>
+            <table class="main_data_body">
                 <tr>
                     <td>Customer ID</td>
                     <td>: {{ customer_informations?.customer_id }}</td>
@@ -125,14 +137,14 @@
                         Block-{{ customer_informations.block_no }},
                         Road-{{ customer_informations.road_no }}
                     </td>
-                    <td>Purpose</td>
-                    <td>: {{ customer_informations.booking_type }}</td>
+                    <td style="text-transform: capitalize;">Purpose</td>
+                    <td style="text-transform: capitalize;">: {{ customer_informations.booking_type }}</td>
                 </tr>
                 <tr>
                     <td>Term</td>
-                    <td>: 06 Year</td>
-                    <td></td>
-                    <td></td>
+                    <td>: {{ customer_informations.property_payment_terms }}</td>
+                    <td>Payment Type</td>
+                    <td style="text-transform: capitalize;">: {{ customer_informations.payment_method.replace('_',' ') }}</td>
                     <!-- <td>Cheque No. & Date</td>
                     <td>: &nbsp;</td> -->
                 </tr>
@@ -182,6 +194,10 @@
             </table>
             <div class="footer">
                 <bold>Cashier</bold>
+                <div
+                    style="opacity: .3; border: 1px solid gray; height: 30px; width: 30px;border-radius: 50%;text-align: center;line-height: 30px;">
+                    Sealing
+                </div>
                 <bold>Authorised</bold>
             </div>
         </div>
