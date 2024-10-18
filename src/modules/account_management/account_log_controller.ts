@@ -25,6 +25,9 @@ import seven_days_collection from './services/seven_days_collection';
 import update_and_approve from './services/update_and_approve';
 import approve_payment from './services/approve_payment';
 import update_and_approve_expense from './services/update_and_approve_expense';
+import store_payment_request from './services/store_payment_request';
+import user_payout_history from './services/user_payout_history';
+import update_payment_request from './services/update_user_payout_status';
 
 export default function (fastify: FastifyInstance) {
     return {
@@ -137,6 +140,21 @@ export default function (fastify: FastifyInstance) {
 
         import: async function (req: FastifyRequest, res: FastifyReply) {
             let data = await data_import(fastify, req);
+            res.code(data.status).send(data);
+        },
+
+        store_payment_request: async function (req: FastifyRequest, res: FastifyReply) {
+            let data = await store_payment_request(fastify, req);
+            res.code(data.status).send(data);
+        },
+
+        user_payout_history: async function (req: FastifyRequest, res: FastifyReply) {
+            let data = await user_payout_history(fastify, req);
+            res.code(data.status).send(data);
+        },
+
+        update_payment_request: async function (req: FastifyRequest, res: FastifyReply) {
+            let data = await update_payment_request(fastify, req);
             res.code(data.status).send(data);
         },
 

@@ -8,6 +8,8 @@ import Details from '../Details';
 import Edit from '../Edit';
 import History from '../History';
 import NewExpense from '../NewExpense';
+import DebitCredit from '../DebitCredit';
+import WithdrawRequest from '../WithdrawRequest';
 
 
 // export { default as DashboardCounterAll} from "./All.jsx";
@@ -29,12 +31,20 @@ export default {
             element: <History />,
         },
         {
+            path: 'withdraw-request',
+            element: <WithdrawRequest />,
+        },
+        {
             path: 'create',
             element: <Create />,
         },
         {
             path: 'new-expense',
             element: <NewExpense />,
+        },
+        {
+            path: 'debit-credit',
+            element: <DebitCredit />,
         },
         {
             path: 'edit/:id',

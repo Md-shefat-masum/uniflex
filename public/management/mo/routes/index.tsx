@@ -10,6 +10,7 @@ import Profile from "../views/pages/Profile/Profile";
 import AllCustomer from "../views/pages/Customer/AllCustomer";
 import BusinessModel from "../views/pages/BusinessModel/BusinessModel";
 import ProfileDetails from '../views/pages/Profile/ProfileDetails';
+import WithdrawRequest from '../views/pages/Payment/WithdrawRequest';
 
 interface RouteTypes extends NonIndexRouteObject {}
 const router: RouteTypes[] = [
@@ -30,7 +31,7 @@ const router: RouteTypes[] = [
                 element: <Payment />,
             },
             {
-                path: 'payment-histories',
+                path: 'payment-histories/:customer_id',
                 element: <PaymentHistory />,
             },
             {
@@ -44,6 +45,14 @@ const router: RouteTypes[] = [
             {
                 path: 'business-model',
                 element: <BusinessModel />,
+            },
+            {
+                path: 'payout-request',
+                element: <WithdrawRequest />,
+            },
+            {
+                path: 'payout-history',
+                element: <PaymentHistory />,
             },
         ],
     },

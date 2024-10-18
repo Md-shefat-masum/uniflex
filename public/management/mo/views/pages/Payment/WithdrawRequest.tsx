@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { RootState, useAppDispatch } from '../../store';
-import { anyObject } from '../../common_types/object';
+import { RootState, useAppDispatch } from '../../../store';
+import { anyObject } from '../../../common_types/object';
 import axios from 'axios';
-import { commnStoreInitialState } from '../../store/slices/common_slice';
+import { commnStoreInitialState } from '../../../store/slices/common_slice';
 import { useSelector } from 'react-redux';
 export interface Props { }
 
-const T1: React.FC<Props> = (props: Props) => {
+const WithdrawRequest: React.FC<Props> = (props: Props) => {
     const dispatch = useAppDispatch();
     const [balance, setBalance] = useState<anyObject>({});
     const state: typeof commnStoreInitialState = useSelector(
@@ -18,8 +18,8 @@ const T1: React.FC<Props> = (props: Props) => {
     }, []);
 
     async function get_data() {
-        let user_id = (state.auth_user as any).user.id;
-        let response = await axios.get('/api/v1/users/' + user_id + '/insentive-calculation');
+        let user_id = (state.auth_user as any)?.user?.id;
+        let response = await axios.get('/api/v1/users/'+user_id+'/insentive-calculation');
         // console.log(response);
         setBalance(response.data.data)
     }
@@ -30,6 +30,43 @@ const T1: React.FC<Props> = (props: Props) => {
         }
         return '';
     }
+   
+    function get_amount_number(key) {
+        if (balance[key]) {
+            return +(balance[key]);
+        }
+        return 0;
+    }
+
+    let available_amount = function(){
+        let amount:any = get_amount_number('balance');
+        amount = amount - get_amount_number('withdraw_pending');
+        return amount;
+    }
+
+    function validate(e) {
+        let amount:any = e.target.value;
+        amount = +amount.replace(/\D/g, '');
+
+        if(amount < 0 ){
+            amount = 0;
+        }
+        if(amount > available_amount()){
+            amount = available_amount();
+        }
+
+        e.target.value = amount;
+    }
+
+    async function submit_handler(e){
+        e.preventDefault();
+        let form_data = new FormData(e.target);
+        form_data.append('user_id', (state.auth_user as any)?.user?.id);
+        let res = await axios.post('/api/v1/account/logs/store-payment-request', form_data);
+        get_data();
+        (window as any).toaster('request submitted');
+        e.target.reset();
+    }
 
     return <div>
         <div className="row">
@@ -39,11 +76,15 @@ const T1: React.FC<Props> = (props: Props) => {
                         <h5>
                             Insentives
                         </h5>
-                        <div className="card-header-right">
-                        </div>
                     </div>
                     <div className="card-body">
-                        <div className="height-scroll custom-scrollbar">
+                        <form onSubmit={submit_handler} action="" className="mb-5">
+                            <label>Enter Payout Amount</label>
+                            <input onKeyUp={validate} onFocus={(e)=>e.target.value = available_amount()} type="text" className="form-control mb-2" name="amount" />
+                            <button className="btn btn-info">Request</button>
+                        </form>
+
+                        <div className="height-scroll custom-scrollbar table-responsive">
                             <table className="table text-center table-bordered">
                                 <thead>
                                     <tr>
@@ -119,6 +160,14 @@ const T1: React.FC<Props> = (props: Props) => {
                                             {get_amount('balance')}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td colSpan={8} className="text-right">
+                                            Payment Request
+                                        </td>
+                                        <td className="text-right">
+                                            {get_amount('withdraw_pending')}
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -129,5 +178,4 @@ const T1: React.FC<Props> = (props: Props) => {
 
     </div>;
 };
-
-export default T1;
+export default WithdrawRequest

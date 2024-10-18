@@ -20,6 +20,7 @@ const SideBar: React.FC<Props> = (props: Props) => {
 
                 <MenuSingle to="/booking/create" icon="icon-plus" label="New Booking" />
                 <MenuSingle to="/project_payment/create" icon="icon-plus" label="Take Payment" />
+                <MenuSingle to="/accounts/withdraw-request" icon="icon-plus" label="Payout Request" />
                
                 {/* Account  */}
                 <MenuDropDown group_title="Account" icon="icon-desktop">
@@ -30,7 +31,7 @@ const SideBar: React.FC<Props> = (props: Props) => {
                     <MenuDropDownItem label="All Account" to="/account_types" />
                     <MenuDropDownItem label="All Account Number" to="/account_numbers" />
                     <MenuDropDownItem label="All Account Categories" to="/account_categories" />
-                    <MenuDropDownItem label="Debit Credit" to="/debit_credit" />
+                    <MenuDropDownItem label="Debit Credit" to="/accounts/debit-credit" />
                 </MenuDropDown>
 
                 <li>

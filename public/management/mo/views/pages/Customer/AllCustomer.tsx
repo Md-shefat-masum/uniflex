@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { anyObject } from '../../../../customer/common_types/object';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 export interface Props { }
 
 const AllCustomer: React.FC<Props> = (props: Props) => {
@@ -92,9 +93,9 @@ const AllCustomer: React.FC<Props> = (props: Props) => {
                                                     {customer_info?.have_to_pay_amount - item?.total_paid} TK
                                                 </td>
                                                 <td>
-                                                    <button className="btn btn-info">
+                                                    <Link to={`/payment-histories/${item.id}`} className="btn btn-info">
                                                         Payment Histories
-                                                    </button>
+                                                    </Link>
                                                 </td>
                                             </tr>)
 

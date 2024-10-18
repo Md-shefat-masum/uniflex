@@ -14,6 +14,7 @@ import restore from './services/accounts/restore';
 import destroy from './services/accounts/destroy';
 import block from './services/accounts/block';
 import data_import from './services/accounts/import';
+import store_payment_request from './services/store_payment_request';
 
 export default function (fastify: FastifyInstance) {
     return {
@@ -64,7 +65,6 @@ export default function (fastify: FastifyInstance) {
             let data = await data_import(fastify, req);
             res.code(data.status).send(data);
         },
-
         // export: async function (req: FastifyRequest, res: FastifyReply) {},
     };
 }

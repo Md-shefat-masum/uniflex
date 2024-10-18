@@ -14,10 +14,11 @@ const SideBar: React.FC<Props> = (props: Props) => {
     return (
         <>
             <ul className="sidebar-menu">
-                
                 <MenuSingle to="/" icon="icon-dashboard" label="Dashboard" />
-                <MenuSingle to="/customers" icon="icon-dashboard" label="Customers" />
-                <MenuSingle to="/profile" icon="icon-dashboard" label="Profile" />
+                <MenuSingle to="/payout-request" icon="icon-money" label="Payout Request" />
+                <MenuSingle to="/payout-history" icon="icon-money" label="Payout History" />
+                <MenuSingle to="/customers" icon="icon-user" label="Customers" />
+                <MenuSingle to="/profile" icon="icon-user" label="Profile" />
                 <MenuSingle to="/profile-details" icon="icon-list" label="Profile Informations" />
                 {/* <MenuSingle to="/business-model" icon="icon-dashboard" label="Business Model" /> */}
                 {/* <MenuSingle to="/payment-histories" icon="icon-dashboard" label="Payments and Revenues" /> */}

@@ -1,39 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-// import setup from './config/setup';
-import { RootState, useAppDispatch } from '../../../../../../store';
-import { all } from './config/store/async_actions/all';
-import setup from './config/setup';
-import { initialState } from './config/store/inital_state';
-import Header from './components/all_data_page/Header';
-import TableFooter from './components/all_data_page/TableFooter';
-import Paginate from '../../../../../components/Paginate';
-import Filter from './components/canvas/Filter';
-import QuickView from './components/canvas/QuickView';
-import storeSlice from './config/store';
-import { anyObject } from '../../../../../../common_types/object';
-import SelectAll from './components/all_data_page/SelectIAll';
-import TableHeading from './components/all_data_page/TableHeading';
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
-export interface Props { }
-
-const All: React.FC<Props> = (props: Props) => {
-    const state: typeof initialState = useSelector(
-        (state: RootState) => state[setup.module_name],
-    );
-
-    const dispatch = useAppDispatch();
+function DebitCredit() {
 
     const [logs, setLog] = useState<any>({})
 
     useEffect(() => {
-        // dispatch(
-        //     storeSlice.actions.set_select_fields(
-        //         'id, name, email, image, status',
-        //     ),
-        // );
-        // dispatch(all({}));
         axios.get('/api/v1/account/logs/debit-credit')
             .then(res => {
                 setLog(res.data.data)
@@ -50,25 +22,16 @@ const All: React.FC<Props> = (props: Props) => {
             })
     }
 
-    function quick_view(data: anyObject = {}) {
-        dispatch(storeSlice.actions.set_item(data));
-        dispatch(storeSlice.actions.set_show_quick_view_canvas(true));
-    }
-
-    interface data {
-        [key: string]: any;
-    }
-
     let final_amount = 0;
     let final_debit = 0;
     let final_credit = 0;
 
     function get_final_amount(item) {
-        
+
         if (final_credit == 0) final_credit = logs.prev_credit;
         if (final_debit == 0) final_debit = logs.prev_debit || 0;
         if (final_amount == 0) final_amount = (logs.prev_credit - logs.prev_debit) || 0;
-        
+
         if (item.type == 'income') {
             final_amount += item.amount;
             final_credit += item.amount
@@ -82,7 +45,22 @@ const All: React.FC<Props> = (props: Props) => {
     return (
         <div className="page_content">
             <div className="explore_window fixed_size">
-                <Header search_handler={search_handler} title={"Debit Credit"}></Header>
+                <div className="action_bar">
+                    <div className="navigation">
+                        <form onSubmit={search_handler} className="d-flex gap-2 align-items-center">
+                            <input type="date" id="start_date" name="start_date" className="form-control" />
+                                TO
+                            <input type="date" id="end_date" name="end_date" className="form-control" />
+                            <button className="btn btn-sm btn-outline-info">
+                                <i className="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div className="title no_move">
+                        <h5>Debit Credit</h5>
+                    </div>
+                    <div className="control"></div>
+                </div>
 
                 <div className="content_body">
                     <div className="data_list">
@@ -166,6 +144,6 @@ const All: React.FC<Props> = (props: Props) => {
             <QuickView></QuickView> */}
         </div>
     );
-};
+}
 
-export default All;
+export default DebitCredit

@@ -6,7 +6,6 @@ import accounts from '../views/pages/accounts/config/store';
 import account_types from '../views/pages/accounts/menus/accounts/account_types/config/store';
 import account_categories from '../views/pages/accounts/menus/accounts/account_categories/config/store';
 import account_numbers from '../views/pages/accounts/menus/accounts/account_numbers/config/store';
-import debit_credit from '../views/pages/accounts/menus/payments/debit_credit/config/store';
 
 import booking from '../views/pages/booking/config/store';
 import project from '../views/pages/project/config/store';
@@ -22,7 +21,6 @@ const store = configureStore({
         account_categories: account_categories.reducer,
         account_numbers: account_numbers.reducer,
         common_store: commonStore.reducer,
-        debit_credit: debit_credit.reducer,
 
         booking: booking.reducer,
         project: project.reducer,

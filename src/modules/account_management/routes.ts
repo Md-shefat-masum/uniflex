@@ -38,10 +38,15 @@ module.exports = async function (fastify: FastifyInstance) {
     const AccountLogControllerInstance = account_log_controller(fastify);
     prefix = '/account/logs';
     fastify
+        .addHook('preHandler', check_auth)
         .get(`${prefix}`, AccountLogControllerInstance.all)
         .get(`${prefix}/incomes`, AccountLogControllerInstance.all_incomes)
         .get(`${prefix}/expenses`, AccountLogControllerInstance.all_expense)
         .post(`${prefix}/store`, AccountLogControllerInstance.store)
+        .post(`${prefix}/store-payment-request`, AccountLogControllerInstance.store_payment_request)
+        
+        .get(`${prefix}/user-payout-history`, AccountLogControllerInstance.user_payout_history)
+        .post(`${prefix}/update-payment-request`, AccountLogControllerInstance.update_payment_request)
         
         .post(`${prefix}/store-expense`,AccountLogControllerInstance.store_expense)
         .get(`${prefix}/debit-credit`,AccountLogControllerInstance.debit_credit)
@@ -49,9 +54,7 @@ module.exports = async function (fastify: FastifyInstance) {
         .get(`${prefix}/seven-days-collection`,AccountLogControllerInstance.seven_days_collection)
         
         /** store log after a successful payment */
-        .post(`${prefix}/store-gateway-payment-on-success`,{
-            preHandler: check_auth,
-        }, AccountLogControllerInstance.store_gateway_payment)
+        .post(`${prefix}/store-gateway-payment-on-success`, AccountLogControllerInstance.store_gateway_payment)
         
         .post(`${prefix}/update`, AccountLogControllerInstance.update)
         .post(`${prefix}/update-and-approve`, AccountLogControllerInstance.update_and_approve)
@@ -71,6 +74,7 @@ module.exports = async function (fastify: FastifyInstance) {
     prefix = '/account/numbers';
     fastify
         .get(`${prefix}`, AccountNumberControllerInstance.all)
+        .get(`${prefix}/all`, AccountNumberControllerInstance.get_all)
         .get(`${prefix}/:id`, AccountNumberControllerInstance.find)
         .post(`${prefix}/store`, AccountNumberControllerInstance.store)
         .post(`${prefix}/update`, AccountNumberControllerInstance.update)

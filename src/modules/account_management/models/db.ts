@@ -13,6 +13,7 @@ import * as accounts_model from './accounts';
 import * as account_category_model from './account_categories';
 import * as account_user_sales_insentive_model from './account_user_sales_insentive';
 import * as account_user_sales_insentive_calculation_model from './account_user_sales_insentive_calculation';
+import * as payout_request from './payout_request_model';
 import { app_config } from '../../../configs/app.config';
 require('dotenv').config();
 
@@ -39,6 +40,7 @@ interface models {
     AccountCategoryModel: typeof account_category_model.DataModel;
     AccountUserSalesInsentiveModel: typeof account_user_sales_insentive_model.DataModel;
     AccountUserSalesInsentiveCalculationModel: typeof account_user_sales_insentive_calculation_model.DataModel;
+    payout_request_model: typeof payout_request.DataModel;
     // Project: typeof project_model.DataModel;
     sequelize: Sequelize;
 }
@@ -54,6 +56,7 @@ const db = async function (): Promise<models> {
     const AccountCategoryModel = account_category_model.init(sequelize);
     const AccountUserSalesInsentiveModel = account_user_sales_insentive_model.init(sequelize);
     const AccountUserSalesInsentiveCalculationModel = account_user_sales_insentive_calculation_model.init(sequelize);
+    const payout_request_model = payout_request.init(sequelize);
 
     // await sequelize.sync({
     // //    force: true,
@@ -103,7 +106,13 @@ const db = async function (): Promise<models> {
         foreignKey: 'project_id',
         targetKey: 'id',
         as: 'project'
-    })
+    });
+
+    payout_request_model.belongsTo(UserModel,{
+        foreignKey: 'user_id',
+        targetKey: 'id',
+        as: 'user'
+    });
 
     // User.hasMany(Project, {
     //     sourceKey: 'id',
@@ -136,6 +145,7 @@ const db = async function (): Promise<models> {
         AccountCategoryModel,
         AccountUserSalesInsentiveModel,
         AccountUserSalesInsentiveCalculationModel,
+        payout_request_model,
         // Project,
         sequelize,
     };

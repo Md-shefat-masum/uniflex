@@ -88,7 +88,7 @@ const Create: React.FC<Props> = (props: Props) => {
                         >
                             {/* Project Information */}
                             <div>
-                                <h5 className="mb-4">Personal Informations</h5>
+                                <h5 className="mb-4">Project Payment</h5>
                                 <div className="form_auto_fit">
                                     <div className="form-group form-vertical grid_full_width">
                                         <label>Customer</label>

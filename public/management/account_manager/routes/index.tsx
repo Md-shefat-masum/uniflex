@@ -9,7 +9,6 @@ import accounts from '../views/pages/accounts/config/routes';
 import account_types from '../views/pages/accounts/menus/accounts/account_types/config/routes';
 import account_categories from '../views/pages/accounts/menus/accounts/account_categories/config/routes';
 import account_numbers from '../views/pages/accounts/menus/accounts/account_numbers/config/routes';
-import debit_credit from '../views/pages/accounts/menus/payments/debit_credit/config/routes';
 
 import projects from "../views/pages/project/config/routes";
 import project_payment from "../views/pages/project/menus/project_payment/config/routes";
@@ -34,7 +33,6 @@ const router: RouteTypes[] = [
             account_types,
             account_categories,
             account_numbers,
-            debit_credit,
             
             users,
         ],

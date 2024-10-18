@@ -104,6 +104,13 @@ async function insetive_calculation(
                 account_category_id: 4, // insentive_withdraw
             }
         });
+       
+        let withdraw_pending = await account_models.payout_request_model.sum('amount',{
+            where: {
+                user_id: auth_user_id,
+                is_approved: 'pending', // insentive_withdraw
+            }
+        });
 
         let prev_booking_money = await get_prev_money('booking_money');
         let today_booking_money = await get_today_money('booking_money');
@@ -148,6 +155,8 @@ async function insetive_calculation(
                 total_insentive: total_insentive,
                 total_withdraw: total_withdraw,
                 balance: total_insentive - total_withdraw,
+
+                withdraw_pending: withdraw_pending,
 
                 prev: moment().subtract(1,'days').format('YYYY-MM-DD'),
                 today: moment().subtract(0,'days').format('YYYY-MM-DD'),

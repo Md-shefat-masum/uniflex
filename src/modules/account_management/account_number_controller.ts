@@ -14,11 +14,19 @@ import restore from './services/account_numbers/restore';
 import destroy from './services/account_numbers/destroy';
 import block from './services/account_numbers/block';
 import data_import from './services/account_numbers/import';
+import get_all from './services/account_numbers/get_all';
 
 export default function (fastify: FastifyInstance) {
     return {
         all: async function (req: FastifyRequest, res: FastifyReply) {
             let data: responseObject = await all(fastify, req);
+            res
+            .code(data.status)
+            .header('Cache-Control', 'public, max-age=30') 
+            .send(data);
+        },
+        get_all: async function (req: FastifyRequest, res: FastifyReply) {
+            let data: responseObject = await get_all(fastify, req);
             res
             .code(data.status)
             .header('Cache-Control', 'public, max-age=30') 
