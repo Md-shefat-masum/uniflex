@@ -36,10 +36,51 @@ async function employee_details(
             ],
         });
 
+        let total_mo = 0;
+        let total_agm = 0;
+        let total_gm = 0;
+        let total_ed = 0;
+        let total_customer = 0;
+
         if (data) {
-            
+            total_mo = await models.UserModel.count({
+                where: {
+                    reference: data.id,
+                    designation: 'mo',
+                }
+            });
+            total_agm = await models.UserModel.count({
+                where: {
+                    reference: data.id,
+                    designation: 'agm',
+                }
+            });
+            total_gm = await models.UserModel.count({
+                where: {
+                    reference: data.id,
+                    designation: 'gm',
+                }
+            });
+            total_ed = await models.UserModel.count({
+                where: {
+                    reference: data.id,
+                    designation: 'ed',
+                }
+            });
+            total_customer = await models.UserModel.count({
+                where: {
+                    reference: data.id,
+                    role: 'customer',
+                }
+            });
+
             return response(200, 'data found', {
                 user: data,
+                total_mo: total_mo,
+                total_agm: total_agm,
+                total_gm: total_gm,
+                total_customer: total_customer,
+                total_ed: total_ed,
             });
         } else {
             throw new custom_error('not found', 404, 'data not found');

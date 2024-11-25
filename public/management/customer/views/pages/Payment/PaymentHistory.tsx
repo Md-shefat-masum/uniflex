@@ -17,10 +17,33 @@ const PaymentHistory: React.FC<Props> = (props: Props) => {
             .then(res => {
                 setPayments(res.data.data);
             })
-    }, [state.auth_user])
+    }, [state.auth_user]);
+
+    function search_handler(e) {
+        e.preventDefault();
+        let formData = new FormData(e.target);
+        const params = {};
+        formData.forEach((value, key) => {
+            params[key] = value;
+        });
+        axios.get('/api/v1/project/payments/customer/' + (state.auth_user as any)?.user?.id,{params})
+            .then(res => {
+                setPayments(res.data.data);
+            });
+    }
 
     return <div className="page_content">
         <div className="row mt-5">
+            <div className="col-12">
+                <div className="card-header-right mb-4">
+                    <form onSubmit={search_handler} className="d-flex align-items-center gap-2">
+                        <input name='start_date' className="form-control" type="date" />
+                        <span>To</span>
+                        <input name='end_date' className="form-control" type="date" />
+                        <button className="btn btn-info">Submit</button>
+                    </form>
+                </div>
+            </div>
             <div className="col-xl-10 col-lg-12">
                 <div className="card w-100" style={{ minHeight: 463.375 }}>
                     <div className="card-header">

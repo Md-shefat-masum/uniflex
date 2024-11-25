@@ -13,6 +13,12 @@ const T1: React.FC<Props> = (props: Props) => {
         (state: RootState) => state['common_store'],
     );
 
+    const common_store = useSelector((state: RootState) => state['common_store']);
+    const [user, setUser] = useState<anyObject>({})
+    useEffect(() => {
+        setUser((common_store as anyObject)?.auth_user)
+    }, [common_store.auth_user])
+
     useEffect(() => {
         get_data();
     }, [state.auth_user]);
@@ -122,6 +128,21 @@ const T1: React.FC<Props> = (props: Props) => {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <div className="card-body">
+                        <table className="table" style={{ maxWidth: 200, }}>
+                            <tbody>
+                                <tr>
+                                    <td>Customer</td>
+                                    <td>
+                                        {user?.total_customer}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

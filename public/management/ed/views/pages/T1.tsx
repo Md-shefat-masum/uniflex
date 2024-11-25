@@ -2,11 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../store';
 import { anyObject } from '../../common_types/object';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 export interface Props { }
 
 const T1: React.FC<Props> = (props: Props) => {
     const dispatch = useAppDispatch();
     const [balance, setBalance] = useState<anyObject>({});
+    
+    const common_store = useSelector((state: RootState) => state['common_store']);
+    const [user, setUser] = useState<anyObject>({})
+    useEffect(() => {
+        setUser((common_store as anyObject)?.auth_user)
+    }, [common_store.auth_user])
 
     useEffect(() => {
         get_data();
@@ -29,8 +37,8 @@ const T1: React.FC<Props> = (props: Props) => {
         <div className="row">
             <div className="col-12">
                 <div className="card mt-4 height-equal w-100 equal-height-lg" style={{ minHeight: 463.375 }}>
-                    <div className="card-header">
-                        <h5>
+                    <div className="card-header pt-2">
+                        <h5 className="my-0">
                             Todays Insentives
                         </h5>
                         <div className="card-header-right">
@@ -116,6 +124,39 @@ const T1: React.FC<Props> = (props: Props) => {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <div className="card-body">
+                        <table className="table" style={{ maxWidth: 200, }}>
+                            <tbody>
+                                <tr>
+                                    <td>GM</td>
+                                    <td>
+                                        {user?.total_gm}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>AGM</td>
+                                    <td>
+                                        {user?.total_agm}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>MO</td>
+                                    <td>
+                                        {user?.total_mo}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Customer</td>
+                                    <td>
+                                        {user?.total_customer}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

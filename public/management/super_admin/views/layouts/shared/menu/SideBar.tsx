@@ -54,7 +54,7 @@ const SideBar: React.FC<Props> = (props: Props) => {
                     <MenuDropDownItem label="Debit Credit" to="/debit_credit" />
                 </MenuDropDown>
                 {/* Reports  */}
-                <MenuDropDown group_title="Reports" icon="icon-desktop">
+                {/* <MenuDropDown group_title="Reports" icon="icon-desktop">
                     <MenuDropDownItem label="Income Statement" to="/income_statement" />
                     <MenuDropDownItem label="Expense Statement" to="/expense_statement" />
                     <MenuDropDownItem label="Closing Balance" to="/closing_balance" />
@@ -62,7 +62,7 @@ const SideBar: React.FC<Props> = (props: Props) => {
                     <MenuDropDownItem label="Customer Report" to="/customer_report" />
                     <MenuDropDownItem label="Due Report" to="/due_report" />
                     <MenuDropDownItem label="Incentive Report" to="/incentive_report" />
-                </MenuDropDown>
+                </MenuDropDown> */}
                 {/* Project Visits  */}
                 <MenuDropDown group_title="Project Visits" icon="icon-desktop">
                     <MenuDropDownItem label="Visit History" to="/assign_visit" />

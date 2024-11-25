@@ -80,6 +80,7 @@
     "agm": "vite build --config vite-config-agm.js --watch --sourcemap",
     "gm": "vite build --config vite-config-gm.js --watch --sourcemap",
     "ed": "vite build --config vite-config-ed.js --watch --sourcemap",
+    "hr": "vite build --config vite-config-hr.js --watch --sourcemap",
     "customer": "vite build --config vite-config-customer.js --watch --sourcemap",
     "admin": "vite build --config vite-config-admin.js --watch",
     "account-officer": "vite build --config vite-config-account-officer.js --watch",

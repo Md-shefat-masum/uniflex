@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../store';
+import { RootState, useAppDispatch } from '../../store';
 import { anyObject } from '../../common_types/object';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 export interface Props { }
 
 const T1: React.FC<Props> = (props: Props) => {
     const dispatch = useAppDispatch();
     const [balance, setBalance] = useState<anyObject>({});
+
+    const common_store = useSelector((state: RootState) => state['common_store']);
+    const [user, setUser] = useState<anyObject>({})
+    useEffect(() => {
+        setUser((common_store as anyObject)?.auth_user)
+    }, [common_store.auth_user])
 
     useEffect(() => {
         get_data();
@@ -118,6 +125,34 @@ const T1: React.FC<Props> = (props: Props) => {
                         </div>
                     </div>
                 </div>
+
+                <div className="card">
+                    <div className="card-body">
+                        <table className="table" style={{ maxWidth: 200, }}>
+                            <tbody>
+                                <tr>
+                                    <td>AGM</td>
+                                    <td>
+                                        {user?.total_agm}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>MO</td>
+                                    <td>
+                                        {user?.total_mo}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Customer</td>
+                                    <td>
+                                        {user?.total_customer}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
 

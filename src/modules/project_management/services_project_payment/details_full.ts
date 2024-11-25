@@ -25,6 +25,17 @@ async function details_full(
             where: {
                 id: params.id,
             },
+            attributes: [
+                'id',
+                'project_id',
+                'user_id',
+                'date',
+                'amount',
+                'amount_in_text',
+                'receipt_no',
+                'type',
+                'account_log_id',
+            ],
             include: [
                 {
                     model: models.UserModels,
@@ -34,21 +45,37 @@ async function details_full(
                             model: models.ProjectCustomerInfomationModel,
                             as: 'project_customer_information',
                         }
-                    ]
+                    ],
+                    attributes: select_fields,
                 },
                 {
                     model: models.UserModels,
-                    as: 'reference_info'
+                    as: 'reference_info',
+                    attributes: select_fields,
                 },
                 {
                     model: models.ProjectModel,
-                    as: 'project_info'
+                    as: 'project_info',
+                    attributes: [
+                        'id',
+                        'uid',
+                        'title',
+                    ]
                 }
             ]
         });
+
+        let total_payment = await models.ProjectPaymentModel.sum('amount',{
+            where: {
+                user_id: data?.user_id
+            }
+        });
         
         if (data) {
-            return response(200, 'data found', data);
+            return response(200, 'data found', {
+                data,
+                total_payment,
+            });
         } else {
             throw new custom_error('not found', 404, 'data not found');
         }

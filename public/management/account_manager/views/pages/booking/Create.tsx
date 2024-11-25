@@ -396,17 +396,19 @@ const Create: React.FC<Props> = (props: Props) => {
                                             }}
                                         />
                                     </div>
-                                    <div className="form-group form-vertical">
-                                        <Select
-                                            label="Are you a loan recipient?"
-                                            name="r_u_a_loan_recipient"
-                                            values={[
-                                                { text: '--select--', value: '' },
-                                                { text: 'YES', value: 'yes' },
-                                                { text: 'NO', value: 'no' },
-                                            ]}
-                                        />
-                                    </div>
+                                    {/* 
+                                        <div className="form-group form-vertical">
+                                            <Select
+                                                label="Are you a loan recipient?"
+                                                name="r_u_a_loan_recipient"
+                                                values={[
+                                                    { text: '--select--', value: '' },
+                                                    { text: 'YES', value: 'yes' },
+                                                    { text: 'NO', value: 'no' },
+                                                ]}
+                                            />
+                                        </div>
+                                    */}
                                 </div>
                                 <div className="form_auto_fit">
                                     {CreateBookingPaymentInfo().map((field) => (

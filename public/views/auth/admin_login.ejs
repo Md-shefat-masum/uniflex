@@ -156,14 +156,15 @@
                     else if (res.data.data.designation == 'ed') {
                         return location.href = "/ed";
                     }
+                    else if (res.data.data.role == 'hrm') {
+                        return location.href = "/hrm";
+                    }
                     else if (res.data.data.role == 'account_officer') {
                         return location.href = "/accountant-officer";
                     }
                     else if (res.data.data.role == 'account_manager') {
                         return location.href = "/accountant-manager";
                     }
-
-                    
 
                     // if (res.data.data.stage == 'opt sent') {
                     //     otp_code_block.classList.remove('d-none');

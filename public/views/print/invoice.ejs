@@ -78,10 +78,10 @@
         }
 
         .main_data_body {
-            background-image: url('/uniflex_logo_bw.png');
+            background-image: url('/ficon2.png');
             background-position: center;
             background-repeat: no-repeat;
-            background-size: 50%;
+            background-size: 22%;
         }
 
         body {
@@ -136,8 +136,8 @@
                     <td>Plot Description</td>
                     <td>
                         :
-                        Plot No- {{ customer_informations.property_no }},
-                        katha-{{ customer_informations.size_of_property_katha }},
+                        {{ customer_informations.booking_type }} No- {{ customer_informations.property_no }},
+                        Katha-{{ customer_informations.size_of_property_katha }},
                         Block-{{ customer_informations.block_no }},
                         Road-{{ customer_informations.road_no }}
                     </td>
@@ -203,7 +203,7 @@
                 <bold>Cashier</bold>
                 <div
                     style="opacity: .3; border: 1px solid gray; height: 30px; width: 30px;border-radius: 50%;text-align: center;line-height: 30px;">
-                    Sealing
+                    Seal
                 </div>
                 <bold>Authorised</bold>
             </div>
@@ -228,12 +228,6 @@
                 }
 
                 this.next_date = moment(this.booking.payment_date).add(30, 'days').format('yyyy-MM-DD');
-
-                console.log(
-                    this.booking,
-                    this.customer_informations
-                );
-
             }
         })
     </script>

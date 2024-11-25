@@ -27,6 +27,7 @@ async function refered_customers(
             logging: true,
             where: {
                 [designation]: user_id,
+                role: 'customer',
             },
             // attributes: {
             //     exclude: ['password', 'token', 'forget_code', 'user_agent'],

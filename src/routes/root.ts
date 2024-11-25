@@ -75,6 +75,14 @@ module.exports = async function (fastify: FastifyInstance) {
             },
         )
         .get(
+            '/hrm',
+            { preHandler: check_auth_and_redirect },
+            async (_req: FastifyRequest, reply: FastifyReply) => {
+                if((_req as any).user.role != 'hrm') reply.redirect(301, '/');
+                return reply.view('dashboard/hr.ejs');
+            },
+        )
+        .get(
             '/accountant-manager',
             { preHandler: check_auth_and_redirect },
             async (_req: FastifyRequest, reply: FastifyReply) => {

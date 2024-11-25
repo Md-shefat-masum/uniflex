@@ -88,10 +88,10 @@
         }
 
         .main_data_body {
-            background-image: url('/uniflex_logo_bw.png');
+            background-image: url('/ficon2.png');
             background-position: center;
             background-repeat: no-repeat;
-            background-size: 50%;
+            background-size: 22%;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
@@ -137,8 +137,8 @@
                     <td>Plot Description</td>
                     <td>
                         :
-                        Plot No - {{ customer_informations.property_no }},
-                        katha - {{ customer_informations.size_of_property_katha }},
+                        {{ customer_informations.booking_type }} No - {{ customer_informations.property_no }},
+                        Katha - {{ customer_informations.size_of_property_katha }},
                         Block - {{ customer_informations.block_no }},
                         Road - {{ customer_informations.road_no }}
                     </td>
@@ -151,7 +151,7 @@
                     <td>Term</td>
                     <td>: {{ customer_informations.property_payment_terms }}</td>
                     <td>Payment Type</td>
-                    <td style="text-transform: capitalize;">: {{ customer_informations.payment_method.replace('_',' ') }}</td>
+                    <td style="text-transform: capitalize;">: {{ payment_info.type?.replace('_',' ') }}</td>
                     <!-- <td>Cheque No. & Date</td>
                     <td>: &nbsp;</td> -->
                 </tr>
@@ -190,7 +190,10 @@
                         <!-- <input type="text" v-model="installment_count" style="border: 1px solid rgb(242, 242, 242);"> -->
                     </td>
                     <td>Total Tk Paid</td>
-                    <td>{{payment_info.amount_in_text}}</td>
+                    <td>
+                        <!-- {{payment_info.amount_in_text}} -->
+                        {{ new Intl.NumberFormat().format(total_payment) }}
+                    </td>
                     <td>Next Date</td>
                     <td>
                         <label for="">
@@ -204,7 +207,7 @@
                 <bold>Cashier</bold>
                 <div
                     style="opacity: .3; border: 1px solid gray; height: 30px; width: 30px;border-radius: 50%;text-align: center;line-height: 30px;">
-                    Sealing
+                    Seal
                 </div>
                 <bold>Authorised</bold>
             </div>
@@ -220,15 +223,17 @@
                 next_date: new Date(),
                 installment_count: '001',
                 payment_info: {},
+                total_payment: 0,
             }),
             mounted: function () {
                 let url = new URL(location.href);
                 let id = url.searchParams.get('id');
                 fetch('/api/v1/project/payments/details/' + id)
                     .then(res => res.json())
-                    .then(({ data }) => {
-                        // console.log(data);
-                        this.payment_info = data;
+                    .then((response) => {
+                        let data = response.data.data;
+                        this.payment_info = response.data.data;
+                        this.total_payment = response.data.total_payment;
                         try {
                             this.customer_informations = JSON.parse(data.user_info.project_customer_information.customer_informations);
                         } catch (error) {
