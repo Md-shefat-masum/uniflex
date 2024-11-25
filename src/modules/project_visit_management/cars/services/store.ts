@@ -16,8 +16,8 @@ import moment from 'moment';
 async function validate(req: Request) {
     let field = '';
     let fields = [
-        'full_name',
-        'email',
+        'title',
+        'total_seat',
     ];
 
     for (let index = 0; index < fields.length; index++) {

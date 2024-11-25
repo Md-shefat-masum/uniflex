@@ -3,6 +3,7 @@ import {
     Sequelize,
 } from 'sequelize';
 import * as car_booking_schedule_model from './model';
+import * as car_model from '../../cars/models/model';
 // import * as project_model from '../../user_admin copy/models/project_model';
 require('dotenv').config();
 
@@ -26,38 +27,26 @@ const sequelize = new Sequelize(db_string, {
 
 interface models {
     CarBookingScheduleModel: typeof car_booking_schedule_model.DataModel;
+    CarModel: typeof car_model.DataModel;
     // Project: typeof project_model.DataModel;
     sequelize: Sequelize;
 }
 const db = async function (): Promise<models> {
     const CarBookingScheduleModel = car_booking_schedule_model.init(sequelize);
+    const CarModel = car_model.init(sequelize);
     // const Project = project_model.init(sequelize);
 
     await sequelize.sync();
 
-    // User.hasMany(Project, {
-    //     sourceKey: 'id',
-    //     foreignKey: 'user_id',
-    //     as: 'projects',
-    // });
-
-    // User.hasOne(Project, {
-    //     sourceKey: 'id',
-    //     foreignKey: 'user_id',
-    //     as: 'project',
-    // });
-
-    // Project.belongsToMany(User, {
-    //     through: 'project_user',
-    // });
-    // User.belongsToMany(Project, {
-    //     through: 'project_user',
-    // });
+    CarBookingScheduleModel.belongsTo(CarModel, {
+        foreignKey: 'car_id',
+        targetKey: 'id',
+        as: 'car',
+    });
 
     let models: models = {
         CarBookingScheduleModel,
-        // Project,
-
+        CarModel,
         sequelize,
     };
     return models;

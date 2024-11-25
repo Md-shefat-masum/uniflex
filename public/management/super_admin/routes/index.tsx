@@ -29,6 +29,8 @@ import contact_management_routes from '../views/pages/contact_management/config/
 
 /** car management */
 import car_management from '../views/pages/project_visit/car_management/config/routes';
+import car_schedule_management from '../views/pages/project_visit/car_schedule_management/config/routes';
+import car_booking_management from '../views/pages/project_visit/car_booking_management/config/routes';
 
 interface RouteTypes extends NonIndexRouteObject {}
 const router: RouteTypes[] = [
@@ -63,6 +65,8 @@ const router: RouteTypes[] = [
             contact_management_routes,
 
             car_management,
+            car_schedule_management,
+            car_booking_management,
         ],
     },
 ];

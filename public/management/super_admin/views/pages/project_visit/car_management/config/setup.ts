@@ -1,6 +1,6 @@
 import setup_type from './setup_type';
 
-const prefix: string = 'car management';
+const prefix: string = 'Car';
 const setup: setup_type = {
     prefix,
     module_name: 'car_management',
@@ -11,6 +11,8 @@ const setup: setup_type = {
     api_prefix: 'cars',
 
     store_prefix: 'car_management',
+    default_fields: 'id,title,total_seat,status',
+
     layout_title: prefix + ' Management',
 
     all_page_title: 'All ' + prefix,

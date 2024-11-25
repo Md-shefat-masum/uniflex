@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 // import setup from './config/setup';
 import { RootState, useAppDispatch } from '../../../../store';
@@ -11,13 +11,14 @@ import Paginate from '../../../components/Paginate';
 import Filter from './components/canvas/Filter';
 import QuickView from './components/canvas/QuickView';
 import storeSlice from './config/store';
-import { anyObject } from '../../../../common_types/object';
-import SelectAll from './components/all_data_page/SelectIAll';
-import TableHeading from './components/all_data_page/TableHeading';
 import TableRowAction from './components/all_data_page/TableRowAction';
 import SelectItem from './components/all_data_page/SelectItem';
+import SelectAll from './components/all_data_page/SelectIAll';
+import TableHeading from './components/all_data_page/TableHeading';
+import { useSearchParams } from 'react-router-dom';
+import { anyObject } from '../../../../common_types/object';
 
-export interface Props {}
+export interface Props { }
 
 const All: React.FC<Props> = (props: Props) => {
     const state: typeof initialState = useSelector(
@@ -25,15 +26,18 @@ const All: React.FC<Props> = (props: Props) => {
     );
 
     const dispatch = useAppDispatch();
+    let [searchParams] = useSearchParams();
 
     useEffect(() => {
+        dispatch(storeSlice.actions.set_role('all'));
+
         dispatch(
             storeSlice.actions.set_select_fields(
-                'id, name, email, image, status',
+                'id,title,total_seat,status',
             ),
         );
         dispatch(all({}));
-    }, []);
+    }, [searchParams]);
 
     function quick_view(data: anyObject = {}) {
         dispatch(storeSlice.actions.set_item(data));
@@ -61,7 +65,7 @@ const All: React.FC<Props> = (props: Props) => {
                                             sort={true}
                                         />
                                         <TableHeading
-                                            label={`Transport Title`}
+                                            label={`Car Title`}
                                             col_name={`title`}
                                             sort={true}
                                         />
@@ -73,8 +77,7 @@ const All: React.FC<Props> = (props: Props) => {
                                     </tr>
                                 </thead>
                                 <tbody id="all_list">
-                                    {/* {(state.all as any)?.data?.map( */}
-                                    {[].map(
+                                    {(state.all as any)?.data?.map(
                                         (i: { [key: string]: any }) => {
                                             return (
                                                 <tr
@@ -89,16 +92,23 @@ const All: React.FC<Props> = (props: Props) => {
                                                     <td>
                                                         <SelectItem item={i} />
                                                     </td>
-                                                   
                                                     <td>{i.id}</td>
-                                                    <td>{i.car_name}</td>
+                                                    <td>
+                                                        <span
+                                                            className="quick_view_trigger"
+                                                            onClick={() =>
+                                                                quick_view(i)
+                                                            }
+                                                        >
+                                                            {i.title}
+                                                        </span>
+                                                    </td>
                                                     <td>{i.total_seat}</td>
                                                 </tr>
                                             );
                                         },
                                     )}
                                 </tbody>
-                               
                             </table>
                         </div>
 

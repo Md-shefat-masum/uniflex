@@ -24,6 +24,12 @@ async function details(
             where: {
                 id: params.id,
             },
+            include: [
+                {
+                    model: models.CarModel,
+                    as: 'car',
+                },
+            ],
         });
 
         if (data) {

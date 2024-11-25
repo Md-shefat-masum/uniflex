@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Paginate from '../../../../../../components/Paginate';
+import Paginate from '../../../../../components/Paginate';
 import storeSlice from '../../config/store';
 import { all } from '../../config/store/async_actions/all';
 import { useSelector } from 'react-redux';
 import { initialState } from '../../config/store/inital_state';
-import { RootState, useAppDispatch } from '../../../../../../../store';
+import { RootState, useAppDispatch } from '../../../../../../store';
 import setup from '../../config/setup';
 import HeadSearch from '../all_data_page/HeadSearch';
-import { anyObject } from '../../../../../../../common_types/object';
+import { anyObject } from '../../../../../../common_types/object';
 import DropDownCheckbox from './DropDownCheckbox';
 import DropDownSelectedItem from './DropDownSelectedItem';
 
@@ -26,7 +26,7 @@ const DropDown: React.FC<Props> = ({ name, get_selected_data, multiple, default_
     useEffect(() => {
         dispatch(storeSlice.actions.set_only_latest_data(true));
         dispatch(all({}));
-        if(default_value){
+        if (default_value) {
             setSelectedList(default_value);
         }
     }, []);
@@ -98,7 +98,7 @@ const DropDown: React.FC<Props> = ({ name, get_selected_data, multiple, default_
                                                     />
                                                 </div>
                                                 <div className="label">
-                                                    {i.name}
+                                                    {i.title} - {i.total_seat} seats
                                                 </div>
                                             </label>
                                         </li>

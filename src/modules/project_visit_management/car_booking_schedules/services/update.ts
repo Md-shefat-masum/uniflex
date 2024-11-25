@@ -16,7 +16,10 @@ import moment from 'moment';
 async function validate(req: Request) {
     let field = '';
     let fields = [
-        'full_name'
+        'date',
+        'time',
+        'car_id',
+        'location',
     ];
 
     for (let index = 0; index < fields.length; index++) {
@@ -60,12 +63,10 @@ async function update(
     let inputs: InferCreationAttributes<typeof user_model> = {
         car_id: body.car_id,
         title: body.title,
-        date: body.date,
+        date: body.date+" "+body.time,
         location: body.location,
         total_seat: body.total_seat,
-        total_booked: body.total_booked,
     };
-
 
     /** print request data into console */
     // console.clear();

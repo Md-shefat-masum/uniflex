@@ -35,7 +35,7 @@ class DataModel extends Model<Infer, InferCreation> {
     declare date: string;
     declare location: string;
     declare total_seat: number;
-    declare total_booked: number;
+    declare total_booked?: number;
 
     declare status?: status;
     declare creator?: number;

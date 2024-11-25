@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/management_data_page/Header';
 import Footer from './components/management_data_page/Footer';
 import { useSelector } from 'react-redux';
 import setup from './config/setup';
-import { RootState, useAppDispatch } from '../../../../../store';
+import { RootState, useAppDispatch } from '../../../../store';
 import { details } from './config/store/async_actions/details';
 import { initialState } from './config/store/inital_state';
 import { Link, useParams } from 'react-router-dom';
@@ -13,8 +13,8 @@ import Input from './components/management_data_page/Input';
 import InputImage from './components/management_data_page/InputImage';
 import DropDown from './components/dropdown/DropDown';
 import Select from './components/management_data_page/Select';
-import { anyObject } from '../../../../../common_types/object';
-export interface Props {}
+import { anyObject } from '../../../../common_types/object';
+export interface Props { }
 
 const Edit: React.FC<Props> = (props: Props) => {
     const state: typeof initialState = useSelector(
@@ -29,17 +29,12 @@ const Edit: React.FC<Props> = (props: Props) => {
         dispatch(details({ id: params.id }) as any);
     }, []);
 
-    useEffect(() => {
-        if (state.item?.reference_info) {
-            dispatch(
-                storeSlice.actions.set_selected([state.item.reference_info]),
-            );
-        }
-    }, [state.item]);
+
 
     async function handle_submit(e) {
         e.preventDefault();
-        const response = await dispatch(update(new FormData(e.target)) as any);
+        let form_data = new FormData(e.target);
+        const response = await dispatch(update(form_data) as any);
     }
 
     function get_value(key) {
@@ -50,14 +45,6 @@ const Edit: React.FC<Props> = (props: Props) => {
             return '';
         }
         return '';
-    }
-    function get_reference(): anyObject[] | [] {
-        try {
-            if (state.item.reference_info) return [state.item.reference_info];
-        } catch (error) {
-            return [];
-        }
-        return [];
     }
 
     return (
@@ -75,31 +62,17 @@ const Edit: React.FC<Props> = (props: Props) => {
                                 <input
                                     type="hidden"
                                     name="id"
-                                    defaultValue={state.item.id}
+                                    defaultValue={get_value(`id`)}
                                 />
 
                                 <div>
                                     <h5 className="mb-4">
-                                        Personal Informations
+                                        Edit Car informations
                                     </h5>
                                     <div className="form_auto_fit">
-                                        <div className="form-group form-vertical">
-                                            <Input
-                                                name={'uid'}
-                                                label="Employee ID"
-                                            />
-                                        </div>
                                         {[
-                                            'name',
-                                            'email',
-                                            'father_name',
-                                            'mother_name',
-                                            'husband_spouse',
-                                            'phone_number',
-                                            'nid',
-                                            'education',
-                                            'permanent_address',
-                                            'present_address',
+                                            'title',
+                                            'total_seat',
                                         ].map((i) => (
                                             <div className="form-group form-vertical">
                                                 <Input
@@ -109,68 +82,7 @@ const Edit: React.FC<Props> = (props: Props) => {
                                             </div>
                                         ))}
 
-                                        <div className="form-group form-vertical">
-                                            <Select
-                                                value={state.item.designation}
-                                                label="Designation"
-                                                name="designation"
-                                                values={[
-                                                    { text: 'ED', value: 'ed' },
-                                                    { text: 'GM', value: 'gm' },
-                                                    {
-                                                        text: 'AGM',
-                                                        value: 'agm',
-                                                    },
-                                                    { text: 'MO', value: 'mo' },
-                                                ]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group form-vertical">
-                                            <label>Reference</label>
-                                            <div className="form_elements">
-                                                <DropDown
-                                                    multiple={false}
-                                                    get_selected_data={(
-                                                        result,
-                                                    ) => console.log(result)}
-                                                    default_value={get_reference()}
-                                                    name={`reference`}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group form-vertical">
-                                            <Input name={'password'} />
-                                        </div>
-
-                                        <div className="form-group grid_full_width form-vertical">
-                                            <InputImage
-                                                label={'image'}
-                                                name={'image'}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h5 className="mb-4">Bank Informations</h5>
-                                    <div className="form_auto_fit">
-                                        {[
-                                            'bank_name',
-                                            'branch_name',
-                                            'bank_account_no',
-                                            'bank_routing_no',
-                                            'mobile_banking_portal',
-                                            'mobile_banking_ac_no',
-                                        ].map((i) => (
-                                            <div className="form-group form-vertical">
-                                                <Input
-                                                    name={i}
-                                                    value={get_value(i)}
-                                                />
-                                            </div>
-                                        ))}
+                                        
                                     </div>
                                 </div>
 

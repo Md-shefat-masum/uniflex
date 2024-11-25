@@ -2074,6 +2074,45 @@ td.col_id {
   text-transform: capitalize;
 }
 
+.car_booking_body label {
+  margin-bottom: 0;
+}
+.car_booking_body .car_title {
+  background-color: #2e333c;
+  position: sticky;
+  top: 0;
+  padding-bottom: 10px;
+}
+
+.car_list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: max-content;
+  padding-bottom: 30px;
+}
+.car_list .car_item {
+  width: 300px;
+  border: 1px solid rgba(255, 255, 255, 0.533);
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  padding: 10px;
+  border-radius: 5px;
+}
+.car_list .car_item .car_seat {
+  padding: 10px;
+  border: 1px solid rgba(9, 107, 182, 0.3);
+  border-radius: 3px;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  user-select: none;
+}
+.car_list .car_item .car_seat:hover, .car_list .car_item .car_seat.booked {
+  color: white;
+  background: rgba(9, 107, 182, 0.3);
+}
+
 /** public/assets/dashboard/scss/style.scss **/
 
 /*# sourceMappingURL=style.css.map */

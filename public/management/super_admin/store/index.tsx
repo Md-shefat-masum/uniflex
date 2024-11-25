@@ -21,14 +21,13 @@ import incentive_report from '../views/pages/reports/menus/incentive_report/conf
 import income_statement from '../views/pages/reports/menus/income_statement/config/store';
 import project_report from '../views/pages/reports/menus/project_report/config/store';
 
-import assign_visit from '../views/pages/project_visit/menus/assign_visit/config/store';
-import visit_history from '../views/pages/project_visit/menus/visit_history/config/store';
-
 import project_payment from '../views/pages/project/menus/project_payment/config/store';
 
 import contact_management_store from '../views/pages/contact_management/config/store';
 
-import car_management_store from '../views/pages/project_visit/menus/car_management/config/store';  
+import car_management_store from '../views/pages/project_visit/car_management/config/store';  
+import car_schedule_management_store from '../views/pages/project_visit/car_schedule_management/config/store';  
+import car_booking_management_store from '../views/pages/project_visit/car_booking_management/config/store';  
 
 
 const store = configureStore({
@@ -53,13 +52,13 @@ const store = configureStore({
         incentive_report: incentive_report.reducer,
         income_statement: income_statement.reducer,
         project_report: project_report.reducer,
-        assign_visit: assign_visit.reducer,
-        visit_history: visit_history.reducer,
         project_payment: project_payment.reducer,
         
         contact_management: contact_management_store.reducer,
         
         car_management: car_management_store.reducer,
+        car_schedule_management: car_schedule_management_store.reducer,
+        car_booking_management: car_booking_management_store.reducer,
     },
     devTools: true,
 });
