@@ -23,13 +23,12 @@ import incentive_report from '../views/pages/reports/menus/incentive_report/conf
 import income_statement from '../views/pages/reports/menus/income_statement/config/routes';
 import project_report from '../views/pages/reports/menus/project_report/config/routes';
 
-import assign_visit from '../views/pages/project_visit/menus/assign_visit/config/routes';
-import visit_history from '../views/pages/project_visit/menus/visit_history/config/routes';
-
-
 import project_payment from '../views/pages/project/menus/project_payment/config/routes';
 
 import contact_management_routes from '../views/pages/contact_management/config/routes';
+
+/** car management */
+import car_management from '../views/pages/project_visit/car_management/config/routes';
 
 interface RouteTypes extends NonIndexRouteObject {}
 const router: RouteTypes[] = [
@@ -59,10 +58,11 @@ const router: RouteTypes[] = [
             incentive_report,
             income_statement,
             project_report,
-            assign_visit,
-            visit_history,
+
             project_payment,
-            contact_management_routes
+            contact_management_routes,
+
+            car_management,
         ],
     },
 ];

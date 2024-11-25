@@ -28,6 +28,9 @@ import project_payment from '../views/pages/project/menus/project_payment/config
 
 import contact_management_store from '../views/pages/contact_management/config/store';
 
+import car_management_store from '../views/pages/project_visit/menus/car_management/config/store';  
+
+
 const store = configureStore({
     reducer: {
         users: users.reducer,
@@ -55,6 +58,8 @@ const store = configureStore({
         project_payment: project_payment.reducer,
         
         contact_management: contact_management_store.reducer,
+        
+        car_management: car_management_store.reducer,
     },
     devTools: true,
 });
