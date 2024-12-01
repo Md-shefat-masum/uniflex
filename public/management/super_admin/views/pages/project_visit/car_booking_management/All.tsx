@@ -62,9 +62,6 @@ const All: React.FC<Props> = (props: Props) => {
                             <div className="car_list">
                                 <Car car_title="toyota 001" />
                                 <Car car_title="toyota 002" />
-                                <Car car_title="toyota 003" />
-                                <Car car_title="toyota 004" />
-                                <Car car_title="toyota 005" />
                             </div>
                         </div>
                     </div>
