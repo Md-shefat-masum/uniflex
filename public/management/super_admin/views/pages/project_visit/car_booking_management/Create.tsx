@@ -5,10 +5,9 @@ import setup from './config/setup';
 import { useAppDispatch } from '../../../../store';
 import { store } from './config/store/async_actions/store';
 import Input from './components/management_data_page/Input';
-import Select from './components/management_data_page/Select';
-import InputImage from './components/management_data_page/InputImage';
 import { anyObject } from '../../../../common_types/object';
 import CarDropDown from '../car_management/components/dropdown/DropDown';
+import { useLocation } from 'react-router-dom';
 
 export interface Props { }
 
@@ -16,6 +15,10 @@ export interface Props { }
 const Create: React.FC<Props> = (props: Props) => {
     const dispatch = useAppDispatch();
     const [car, setCar] = useState<anyObject>({});
+
+    const location = useLocation();
+    const { state } = location;
+    const seatNo = state?.seat_no;
 
     async function handle_submit(e) {
         e.preventDefault();
@@ -37,15 +40,15 @@ const Create: React.FC<Props> = (props: Props) => {
                             className="mx-auto pt-3"
                         >
                             <div>
-                                <h5 className="mb-4">Car Informations</h5>
+                                <h5 className="mb-4">Create SChedule</h5>
                                 <div className="mb-4">
                                     <label>Select Car</label>
                                     <div>
-                                        <CarDropDown 
+                                        <CarDropDown
                                             name={"car_ids"}
                                             multiple={false}
-                                            get_selected_data={({ids, selectedList}) => {
-                                                let car = selectedList.length? selectedList[0] : {};
+                                            get_selected_data={({ ids, selectedList }) => {
+                                                let car = selectedList.length ? selectedList[0] : {};
                                                 setCar(car);
                                             }} />
                                     </div>
@@ -65,9 +68,17 @@ const Create: React.FC<Props> = (props: Props) => {
                                     </div>
 
                                     <div className="form-group form-vertical">
-                                        <Input name={"location"} type="text" />
+                                        <Input name={"seat_no"} value={seatNo || 0} type="text" />
                                     </div>
-                                    
+
+                                    <div className="form-group form-vertical">
+                                        <Input name={"passenger_name"} type="text" />
+                                    </div>
+
+                                    <div className="form-group form-vertical">
+                                        <Input name={"passenger_contact"} type="text" />
+                                    </div>
+
                                 </div>
                             </div>
 
